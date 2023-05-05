@@ -1,5 +1,7 @@
 package mainPackage;
 
+import java.util.ArrayList;
+
 public class Clases {
 
 }
@@ -65,32 +67,39 @@ class Characters {
 
 class Weapons{
 	private String weapon;
-	private String description;
-	private String race_use;
-	public Weapons(String weapon, String description, String race_use) {
+	//[0]=velocitat, [1]=Força
+	private ArrayList<Integer> description;
+	//[0]=Huma, [1]=Elf, [2]=Nan
+	private ArrayList<String> race_use;
+	
+	
+	public Weapons(String weapon, ArrayList<Integer> description, ArrayList<String> race_use) {
 		super();
 		this.weapon = weapon;
 		this.description = description;
 		this.race_use = race_use;
 	}
+	
+	
 	public String getWeapon() {
 		return weapon;
 	}
 	public void setWeapon(String weapon) {
 		this.weapon = weapon;
 	}
-	public String getDescription() {
+	public ArrayList<Integer> getDescription() {
 		return description;
 	}
-	public void setDescription(String description) {
+	public void setDescription(ArrayList<Integer> description) {
 		this.description = description;
 	}
-	public String getRace_use() {
+	public ArrayList<String> getRace_use() {
 		return race_use;
 	}
-	public void setRace_use(String race_use) {
+	public void setRace_use(ArrayList<String> race_use) {
 		this.race_use = race_use;
 	}
+	
 	
 	
 	
