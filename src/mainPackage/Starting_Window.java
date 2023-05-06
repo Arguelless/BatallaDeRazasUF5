@@ -83,9 +83,10 @@ public void actionPerformed(ActionEvent evento) {
                 	error_messages.setVisible(false);
                 }
             } else if (evento.getSource() == c_character) {
-            	System.out.println("Queda para hacer");
+            	error_messages.setVisible(true);
+            	error_messages.setText("Queda para hacer");
             	character_choosed=true;
-            	error_messages.setVisible(false);
+            	//error_messages.setVisible(false);
             } else if (evento.getSource() == c_weapon) {
             	if(character_choosed==false) {
                 	throw new Starting_windows_exception("Error: You can't choose a weapon without any characters selected");
@@ -96,6 +97,7 @@ public void actionPerformed(ActionEvent evento) {
             else if (evento.getSource() == exit) {
             	dispose();
             }
+            
         } catch (Starting_windows_exception e) {
         	error_messages.setText(e.getMessage());
         	error_messages.setVisible(true);
