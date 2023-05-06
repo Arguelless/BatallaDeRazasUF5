@@ -17,6 +17,11 @@ class Characters {
 	
 	
 	
+	@Override
+	public String toString() {
+		return "Characters [race=" + race + ", health=" + health + ", strength=" + strength + ", defence=" + defence
+				+ ", agility=" + agility + ", speed=" + speed + "]";
+	}
 	public Characters(String race, int health, int strength, int defence, int agility, int speed) {
 		super();
 		this.race = race;

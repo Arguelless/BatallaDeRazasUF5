@@ -12,9 +12,10 @@ import javax.imageio.ImageIO;
 public class Starting_Window extends JFrame implements ActionListener{
 	private boolean character_choosed=false;
 	private JLabel error_messages;
-	private BufferedImage image1,icon;
+	private BufferedImage icon;
 	private JPanel p_principal,p1,p2,p3,panel_image;
-	private JButton play,c_character,c_weapon,exit;
+	private JButton play,c_character,c_weapon,ranking,exit;
+	private Choose_Character_Window Choose_character;
     public Starting_Window() {
     	
     	try {
@@ -53,13 +54,14 @@ public class Starting_Window extends JFrame implements ActionListener{
 		c_character=new JButton("Choose a Character");
 		c_weapon=new JButton("Choose a Weapon");
 		exit=new JButton("Exit");
-		
+		ranking=new JButton("Ranking");
 		
 		p2.add(play);
 		p2.add(c_character);
 		p2.add(c_weapon);
 		p2.add(exit);
-        
+        p2.add(ranking);
+		
 		p3.add(error_messages);
         
 
@@ -67,9 +69,24 @@ public class Starting_Window extends JFrame implements ActionListener{
 		c_character.addActionListener(this);
 		c_weapon.addActionListener(this);
 		exit.addActionListener(this);
-
+		
+		
+		
         setVisible(true);
     }
+    
+    public Characters return_data() {
+    	return Choose_character.getC_data();
+    }
+    
+    
+public Choose_Character_Window getChoose_character() {
+		return Choose_character;
+	}
+
+	public void setChoose_character(Choose_Character_Window choose_character) {
+		Choose_character = choose_character;
+	}
 
 public void actionPerformed(ActionEvent evento) {
     	
@@ -83,21 +100,23 @@ public void actionPerformed(ActionEvent evento) {
                 	error_messages.setVisible(false);
                 }
             } else if (evento.getSource() == c_character) {
-            	error_messages.setVisible(true);
-            	error_messages.setText("Queda para hacer");
-            	character_choosed=true;
-            	//error_messages.setVisible(false);
+            	
+            	error_messages.setVisible(false);
+            	Choose_character =new Choose_Character_Window();
             } else if (evento.getSource() == c_weapon) {
             	if(character_choosed==false) {
                 	throw new Starting_windows_exception("Error: You can't choose a weapon without any characters selected");
                 } else {
                 	error_messages.setVisible(false);
                 }
-            } 
-            else if (evento.getSource() == exit) {
+            } else if (evento.getSource() == ranking) {
+            	error_messages.setText("Queda para hacer");
+            	character_choosed=true;
+            	//error_messages.setVisible(false);
+            }else if (evento.getSource() == exit) {
             	dispose();
             }
-            
+            setVisible(false);
         } catch (Starting_windows_exception e) {
         	error_messages.setText(e.getMessage());
         	error_messages.setVisible(true);
@@ -109,7 +128,7 @@ public void actionPerformed(ActionEvent evento) {
 
 
 class Image extends JPanel{
-	BufferedImage image1;
+	private BufferedImage image1;
 	public Image() {
 		try {
 			image1 = ImageIO.read(new File("./src/Images/Starting_Menu_image.png"));
