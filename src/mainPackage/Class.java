@@ -2,7 +2,7 @@ package mainPackage;
 
 import java.util.ArrayList;
 
-public class Clases {
+public class Class {
 
 }
 
