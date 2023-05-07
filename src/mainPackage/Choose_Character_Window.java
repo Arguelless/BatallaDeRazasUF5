@@ -26,6 +26,7 @@ public class Choose_Character_Window extends JFrame implements ActionListener{
     private JButton[] b_name;
     private Characters c_data;
     private Create_data_local local;
+    private Datos datos = new Datos();
     public Choose_Character_Window(Create_data_local local) {
     	this.local=local;
         try {
@@ -101,33 +102,43 @@ public class Choose_Character_Window extends JFrame implements ActionListener{
         setVisible(true);
 	}
     
-	@Override
+	public  Characters select_character_stat(String raza) {
+		for (Characters c: datos.getCharactersList()) {
+			if (c.getRace().equals(raza)) {
+				return c;
+			}
+		}
+		 return null;
+	}
+    
+    
 	public void actionPerformed(ActionEvent e) {
-		Datos datos = new Datos();
+		
 		if (e.getSource() == b_name[0]) {
           
-           c_data=datos.getElfo();
+           c_data=select_character_stat("Elf");
            
         } else if (e.getSource() == b_name[1]) {
-        	c_data=datos.getElfo();
+        	c_data=select_character_stat("Elf");
         }else if (e.getSource() == b_name[2]) {
-        	c_data=datos.getElfo();
+        	c_data=select_character_stat("Elf");
         }else if (e.getSource() == b_name[3]) {
-        	c_data=datos.getHumano();
+        	c_data=select_character_stat("Humà");
         }else if (e.getSource() == b_name[4]) {
-        	c_data=datos.getHumano();
+        	c_data=select_character_stat("Humà");
         }else if (e.getSource() == b_name[5]) {
-        	c_data=datos.getHumano();
+        	c_data=select_character_stat("Humà");
         }else if (e.getSource() == b_name[6]) {
-        	c_data=datos.getEnano();
+        	c_data=select_character_stat("Nan");
         }else if (e.getSource() == b_name[7]) {
-        	c_data=datos.getEnano();
+        	c_data=select_character_stat("Nan");
         }else if (e.getSource() == b_name[8]) {
-        	c_data=datos.getEnano();
+        	c_data=select_character_stat("Nan");
         }
 		dispose();
 		local.setJugador(c_data);
 		new Starting_Window(local);
+		System.out.println(local.toString());
 		
 	}
 

@@ -4,148 +4,161 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.RenderingHints;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
+
+
+import java.util.ArrayList;
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+
 import javax.swing.JPanel;
 
-public class Choose_Weapon_Window extends JFrame implements ActionListener{
-	private BufferedImage icon;
-    private JPanel[] p_character, p_race;
-    private Image_character[] p_image;
-    private JButton[] b_name;
-    private Characters c_data;
-    private Create_data_local local;
-    public Choose_Weapon_Window(Create_data_local local) {
-    	this.local=local;
-        try {
-            icon = ImageIO.read(new File("./src/Images/icon.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//
+    public class Choose_Weapon_Window extends JFrame implements ActionListener {
+        private BufferedImage icon;
+        private JPanel p_principal, p_elf, p_hum, p_enan;
+        private JPanel[] panels = new JPanel[9];
+        private Image_character[] images = new Image_character[9];
+        private JButton[] b_name = new JButton[9];
+        private Weapons w_data;
+        //private String path;
+        private Create_data_local local;
+        private Datos dato=new Datos();
+        private ArrayList<Weapons> available_weapons=new ArrayList<Weapons>(); ;
         
-        setTitle("Races Fight");
-        setSize(700, 800);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setIconImage(icon);
-        
-        p_character = new JPanel[9];
-        p_race = new JPanel[3];
-        p_image = new Image_character[9];
-        b_name = new JButton[9];
-        
-        for(int i=0; i<9; i++) {
-            p_character[i] = new JPanel();
-            p_character[i].setLayout(new BoxLayout(p_character[i], BoxLayout.Y_AXIS));
-            b_name[i] = new JButton();
-            b_name[i].setAlignmentX(JPanel.CENTER_ALIGNMENT);
-        }
-        
-        for(int i=0; i<3; i++) {
-            p_race[i] = new JPanel();
-            p_race[i].setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        }
-        
-        p_image[0] = new Image_character("./src/Images/arc.jpg");
-        p_image[1] = new Image_character("./src/Images/daga.jpg");
-        p_image[2] = new Image_character("./src/Images/destral.jpg");
-        p_image[3] = new Image_character("./src/Images/Destral de dues mans.png");
-        p_image[4] = new Image_character("./src/Images/espasa.jpg");
-        p_image[5] = new Image_character("./src/Images/espasa doble.jpg");
-        p_image[6] = new Image_character("./src/Images/katana.jpg");
-        p_image[7] = new Image_character("./src/Images/punyal.jpg");
-        p_image[8] = new Image_character("./src/Images/simitarra.jpg");
-        
-        b_name[0].setText("Arc");
-        b_name[1].setText("Daga");
-        b_name[2].setText("Destral");
-        b_name[3].setText("Destral de dues mans");
-        b_name[4].setText("Espasa");
-        b_name[5].setText("Espasa doble");
-        b_name[6].setText("Katana");
-        b_name[7].setText("punyal");
-        b_name[8].setText("Simitarra");
-        
-        for(int i=0; i<3; i++) {
-            for(int j=0; j<3; j++) {
-                p_character[i*3+j].add(p_image[i*3+j]);
-                p_character[i*3+j].add(b_name[i*3+j]);
-                p_race[i].add(p_character[i*3+j]);
+        public Choose_Weapon_Window(Create_data_local local) {
+        	this.local=local;
+            try {
+                icon = ImageIO.read(new File("./src/Images/icon.png"));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            p_race[i].setLayout(new BoxLayout(p_race[i], BoxLayout.X_AXIS));
+            Panels_needed(local);
+            setTitle("Races Fight");
+            setSize(700, 800);
+            setLocationRelativeTo(null);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setIconImage(icon);
+
+            p_principal = new JPanel();
+            
+            p_elf = new JPanel();
+            p_enan = new JPanel();
+            p_hum = new JPanel();
+			
+            p_principal.setLayout(new GridLayout(3, 1));
+            
+            p_elf.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+            p_enan.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+            p_hum.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+			
+            
+            for (int i = 0; i < available_weapons.size(); i++) {
+                panels[i] = new JPanel();
+                panels[i].setLayout(new BoxLayout(panels[i], BoxLayout.Y_AXIS));
+                images[i] = new Image_character("./src/Images/" + getImageFilename(available_weapons.get(i)));
+                b_name[i] = new JButton(available_weapons.get(i).getWeapon());
+                b_name[i].setAlignmentX(JPanel.CENTER_ALIGNMENT);
+                panels[i].add(images[i]);
+                panels[i].add(b_name[i]);
+                //p_principal.add(panels[i]);
+            }
+            
+            for (int i = 0; i < 3; i++) {
+            	try {
+            		p_elf.add(panels[i]);
+                    p_enan.add(panels[i + 3]);
+                    p_hum.add(panels[i + 6]);
+				} catch (Exception e) {
+
+				}
+                
+            }
+			
+            
+            p_principal.add(p_elf);
+            p_principal.add(p_enan);
+            p_principal.add(p_hum);
+			
+            add(p_principal);
+            
+            for (int i = 0; i < available_weapons.size(); i++) {
+                b_name[i].addActionListener(this);
+            }
+            
+            setVisible(true);
         }
         
-        JPanel p_principal = new JPanel(new GridLayout(3,1));
-        p_principal.add(p_race[0]);
-        p_principal.add(p_race[1]);
-        p_principal.add(p_race[2]);
+        public void Panels_needed(Create_data_local local) {
+        	
+        	for (Weapons w : dato.getWeaponsList()) {
+        		if (w.getRace_use().contains(local.getJugador().getRace())) {
+        			available_weapons.add(w);
+        		}
+        	}
+        	
+        }
         
-        add(p_principal);
+        private String getImageFilename(Weapons i) {
+        	 File folder = new File("./src/Images/");
+             
+
+             File[] files = folder.listFiles();
+            
+        	 for (File file : files) {
+        		 //System.out.println(file.getName());
+        		 //System.out.println(i.getWeapon());
+                 if(file.getName().substring(0, file.getName().lastIndexOf('.')).equals(i.getWeapon())) {
+                	 return file.getName();
+                 }
+             }
+        	 
+             
+			return null;
         
-        for (int i = 0; i < b_name.length; i++) {
-            b_name[i].addActionListener(this);
         }
 
-        
-        setVisible(true);
-	}
-    //Falta******************
-	@Override
+
 	public void actionPerformed(ActionEvent e) {
 		Datos dato=new Datos();
-		if (e.getSource() == b_name[0]) {
-	           b_name[0].getText();
-	        } else if (e.getSource() == b_name[1]) {
-	        	Characters c_elf = new Characters("Elf", 40, 4, 2, 7, 7);
-	        	c_data=c_elf;
-	        }else if (e.getSource() == b_name[2]) {
-	        	Characters c_elf = new Characters("Elf", 40, 4, 2, 7, 7);
-	        	c_data=c_elf;
-	        }else if (e.getSource() == b_name[3]) {
-	        	Characters c_hum = new Characters("Huma", 50, 5, 3, 6, 5);
-	        	c_data=c_hum;
-	        }else if (e.getSource() == b_name[4]) {
-	        	Characters c_hum = new Characters("Huma", 50, 5, 3, 6, 5);
-	        	c_data=c_hum;
-	        }else if (e.getSource() == b_name[5]) {
-	        	Characters c_hum = new Characters("Huma", 50, 5, 3, 6, 5);
-	        	c_data=c_hum;
-	        }else if (e.getSource() == b_name[6]) {
-	        	Characters c_enan = new Characters("Nan", 60, 6, 4, 5, 3);
-	        	c_data=c_enan;
-	        }else if (e.getSource() == b_name[7]) {
-	        	Characters c_enan = new Characters("Nan", 60, 6, 4, 5, 3);
-	        	c_data=c_enan;
-	        }else if (e.getSource() == b_name[8]) {
-	        	Characters c_enan = new Characters("Nan", 60, 6, 4, 5, 3);
-	        	c_data=c_enan;
-	        }
-		//*********************
+	
+		for (JButton b : b_name) {
+			if (e.getSource() == b) {
+
+				
+		        for (Weapons w :dato.getWeaponsList()) {
+		        	if (w.getWeapon().equals(b.getText())) {
+		        		w_data=w;
+		        	}
+		        }
+		        } 
+		}
+
 		
 		dispose();
-		local.setJugador(c_data);
+		local.setJugador_w(w_data);;
 		new Starting_Window(local);
+		System.out.println(local.toString());
 		
 	}
 
-	public Characters getC_data() {
-		return c_data;
+	public Weapons getW_data() {
+		return w_data;
 	}
 
-	public void setC_data(Characters c_data) {
-		this.c_data = c_data;
+	public void setW_data(Weapons w_data) {
+		this.w_data = w_data;
 	}
+
+	
     
 	
 }

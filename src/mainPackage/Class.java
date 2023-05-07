@@ -87,6 +87,12 @@ class Weapons{
 	}
 	
 	
+	@Override
+	public String toString() {
+		return "Weapons [weapon=" + weapon + ", description=" + description + ", race_use=" + race_use + "]";
+	}
+
+
 	public String getWeapon() {
 		return weapon;
 	}
@@ -114,91 +120,40 @@ class Datos{
 		super();
 	}
 	//Mas a delante esto tiene que estar en bbdd
-	private Characters enano=new Characters("Nan", 60, 6, 4, 5, 3);
-	private Characters humano=new Characters("Humà", 50, 5, 3, 6, 5);
-	private Characters elfo=new Characters("Elf", 40, 4, 2, 7, 7);
-	private Weapons daga=new Weapons("Daga", new ArrayList<Integer>(Arrays.asList(3,0)), new ArrayList<String>(Arrays.asList("Huma","Elf",null)));
-	private Weapons espasa=new Weapons("Espasa", new ArrayList<Integer>(Arrays.asList(1,1)), new ArrayList<String>(Arrays.asList("Huma","Elf","Nan")));
-	private Weapons destral=new Weapons("Destral", new ArrayList<Integer>(Arrays.asList(0,3)), new ArrayList<String>(Arrays.asList("Huma",null,"Nan")));
-	private Weapons espases_dobles=new Weapons("Espases dobles", new ArrayList<Integer>(Arrays.asList(2,2)), new ArrayList<String>(Arrays.asList("Huma","Elf",null)));
-	private Weapons simitarra=new Weapons("Simitarra", new ArrayList<Integer>(Arrays.asList(2,1)), new ArrayList<String>(Arrays.asList("Huma","Elf",null)));
-	private Weapons arc=new Weapons("Arc", new ArrayList<Integer>(Arrays.asList(5,1)), new ArrayList<String>(Arrays.asList(null,"Elf",null)));
-	private Weapons katana=new Weapons("katana", new ArrayList<Integer>(Arrays.asList(3,2)), new ArrayList<String>(Arrays.asList("Huma",null,null)));
-	private Weapons punyal=new Weapons("Punyal", new ArrayList<Integer>(Arrays.asList(4,0)), new ArrayList<String>(Arrays.asList("Huma","Elf","Nan")));
-	private Weapons destral_de_dues_mans=new Weapons("Destral de dues mans", new ArrayList<Integer>(Arrays.asList(0,5)), new ArrayList<String>(Arrays.asList(null,null,"Nan")));
-	public Characters getEnano() {
-		return enano;
-	}
-	public void setEnano(Characters enano) {
-		this.enano = enano;
-	}
-	public Characters getHumano() {
-		return humano;
-	}
-	public void setHumano(Characters humano) {
-		this.humano = humano;
-	}
-	public Characters getElfo() {
-		return elfo;
-	}
-	public void setElfo(Characters elfo) {
-		this.elfo = elfo;
-	}
-	public Weapons getDaga() {
-		return daga;
-	}
-	public void setDaga(Weapons daga) {
-		this.daga = daga;
-	}
-	public Weapons getEspasa() {
-		return espasa;
-	}
-	public void setEspasa(Weapons espasa) {
-		this.espasa = espasa;
-	}
-	public Weapons getDestral() {
-		return destral;
-	}
-	public void setDestral(Weapons destral) {
-		this.destral = destral;
-	}
-	public Weapons getEspases_dobles() {
-		return espases_dobles;
-	}
-	public void setEspases_dobles(Weapons espases_dobles) {
-		this.espases_dobles = espases_dobles;
-	}
-	public Weapons getSimitarra() {
-		return simitarra;
-	}
-	public void setSimitarra(Weapons simitarra) {
-		this.simitarra = simitarra;
-	}
-	public Weapons getArc() {
-		return arc;
-	}
-	public void setArc(Weapons arc) {
-		this.arc = arc;
-	}
-	public Weapons getKatana() {
-		return katana;
-	}
-	public void setKatana(Weapons katana) {
-		this.katana = katana;
-	}
-	public Weapons getPunyal() {
-		return punyal;
-	}
-	public void setPunyal(Weapons punyal) {
-		this.punyal = punyal;
-	}
-	public Weapons getDestral_de_dues_mans() {
-		return destral_de_dues_mans;
-	}
-	public void setDestral_de_dues_mans(Weapons destral_de_dues_mans) {
-		this.destral_de_dues_mans = destral_de_dues_mans;
+	ArrayList<Characters> charactersList = new ArrayList<>(Arrays.asList(
+		    new Characters("Nan", 60, 6, 4, 5, 3),
+		    new Characters("Humà", 50, 5, 3, 6, 5),
+		    new Characters("Elf", 40, 4, 2, 7, 7)
+		));
+
+	ArrayList<Weapons> weaponsList = new ArrayList<>(Arrays.asList(
+		    new Weapons("Daga", new ArrayList<Integer>(Arrays.asList(3,0)), new ArrayList<String>(Arrays.asList("Humà","Elf",null))),
+		    new Weapons("Espasa", new ArrayList<Integer>(Arrays.asList(1,1)), new ArrayList<String>(Arrays.asList("Humà","Elf","Nan"))),
+		    new Weapons("Destral", new ArrayList<Integer>(Arrays.asList(0,3)), new ArrayList<String>(Arrays.asList("Humà",null,"Nan"))),
+		    new Weapons("Espases dobles", new ArrayList<Integer>(Arrays.asList(2,2)), new ArrayList<String>(Arrays.asList("Humà","Elf",null))),
+		    new Weapons("Simitarra", new ArrayList<Integer>(Arrays.asList(2,1)), new ArrayList<String>(Arrays.asList("Humà","Elf",null))),
+		    new Weapons("Arc", new ArrayList<Integer>(Arrays.asList(5,1)), new ArrayList<String>(Arrays.asList(null,"Elf",null))),
+		    new Weapons("Katana", new ArrayList<Integer>(Arrays.asList(3,2)), new ArrayList<String>(Arrays.asList("Humà",null,null))),
+		    new Weapons("Punyal", new ArrayList<Integer>(Arrays.asList(4,0)), new ArrayList<String>(Arrays.asList("Humà","Elf","Nan"))),
+		    new Weapons("Destral de dues mans", new ArrayList<Integer>(Arrays.asList(0,5)), new ArrayList<String>(Arrays.asList(null,null,"Nan")))
+		));
+
+	public ArrayList<Characters> getCharactersList() {
+		return charactersList;
 	}
 
+	public void setCharactersList(ArrayList<Characters> charactersList) {
+		this.charactersList = charactersList;
+	}
+
+	public ArrayList<Weapons> getWeaponsList() {
+		return weaponsList;
+	}
+
+	public void setWeaponsList(ArrayList<Weapons> weaponsList) {
+		this.weaponsList = weaponsList;
+	}
+	
 	
 	
 	

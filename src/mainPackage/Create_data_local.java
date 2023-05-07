@@ -16,6 +16,14 @@ public class Create_data_local {
 
 
 
+	@Override
+	public String toString() {
+		return "Create_data_local [jugador=" + jugador + ", bot=" + bot + ", jugador_w=" + jugador_w + ", bot_w="
+				+ bot_w + "]";
+	}
+
+
+
 	public Weapons getJugador_w() {
 		return jugador_w;
 	}

@@ -82,6 +82,7 @@ public class Starting_Window extends JFrame implements ActionListener{
 
 public void actionPerformed(ActionEvent evento) {
     	
+		
         try {
         	
             if (evento.getSource() == play) {
@@ -94,6 +95,7 @@ public void actionPerformed(ActionEvent evento) {
             	
             	error_messages.setVisible(false);
             	new Choose_Character_Window(local);
+            	System.out.println(local.toString());
             	dispose();
             } else if (evento.getSource() == c_weapon) {
             	if(character_choosed==false) {
@@ -102,7 +104,9 @@ public void actionPerformed(ActionEvent evento) {
                 	
                 	error_messages.setVisible(false);
                 	dispose();
+                	System.out.println(local.toString());
                 	new Choose_Weapon_Window(local);
+                	System.out.println(local.toString());
                 }
             } else if (evento.getSource() == ranking) {
             	error_messages.setText("Queda para hacer");
