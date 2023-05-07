@@ -18,9 +18,7 @@ public class Starting_Window extends JFrame implements ActionListener{
 	private Create_data_local local;
     public Starting_Window(Create_data_local local) {
     	this.local=local;
-    	if (local!=null) {
-    		character_choosed=true;
-    	}
+
     	try {
 			icon = ImageIO.read(new File("./src/Images/icon.png"));
 		} catch (IOException e) {
@@ -71,6 +69,7 @@ public class Starting_Window extends JFrame implements ActionListener{
 		play.addActionListener(this);
 		c_character.addActionListener(this);
 		c_weapon.addActionListener(this);
+		ranking.addActionListener(this);
 		exit.addActionListener(this);
 		
 		
@@ -86,10 +85,14 @@ public void actionPerformed(ActionEvent evento) {
         try {
         	
             if (evento.getSource() == play) {
+            	if (local.getJugador()!=null) {
+            		character_choosed=true;
+            	}
                 if(character_choosed==false) {
                 	throw new Starting_windows_exception("Error: You can't play without any characters selected");
                 } else {
-                	error_messages.setVisible(false);
+                	//error_messages.setVisible(false);
+                	throw new Starting_windows_exception("Error: No hay nada aun");
                 }
             } else if (evento.getSource() == c_character) {
             	
@@ -109,8 +112,7 @@ public void actionPerformed(ActionEvent evento) {
                 	System.out.println(local.toString());
                 }
             } else if (evento.getSource() == ranking) {
-            	error_messages.setText("Queda para hacer");
-            	character_choosed=true;
+            	throw new Starting_windows_exception("Error: Queda para hacer");
             	//error_messages.setVisible(false);
             }else if (evento.getSource() == exit) {
             	dispose();
