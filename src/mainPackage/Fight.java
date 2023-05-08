@@ -110,6 +110,13 @@ public class Fight {
 			aux = attacker;
 			attacker = defender;
 			defender = aux;
+			
+			if(defender.getHealth()<=0) {
+				System.out.println(attacker.getName()+" won the fight!");
+			}
+			else if(attacker.getHealth()<=0){
+				System.out.println(defender.getName()+" won the fight!");
+			}
 		}
 	}
 	
