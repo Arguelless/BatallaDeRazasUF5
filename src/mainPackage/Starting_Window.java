@@ -18,7 +18,9 @@ public class Starting_Window extends JFrame implements ActionListener{
 	private Create_data_local local;
     public Starting_Window(Create_data_local local) {
     	this.local=local;
-
+    	if (local.getJugador()!=null) {
+    		character_choosed=true;
+    	}
     	try {
 			icon = ImageIO.read(new File("./src/Images/icon.png"));
 		} catch (IOException e) {
@@ -100,6 +102,7 @@ public void actionPerformed(ActionEvent evento) {
             	new Choose_Character_Window(local);
             	System.out.println(local.toString());
             	dispose();
+            	
             } else if (evento.getSource() == c_weapon) {
             	if(character_choosed==false) {
                 	throw new Starting_windows_exception("Error: You can't choose a weapon without any characters selected");
