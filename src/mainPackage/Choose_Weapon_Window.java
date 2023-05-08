@@ -21,7 +21,7 @@ import javax.swing.JFrame;
 
 import javax.swing.JPanel;
 
-//
+//	Aun no lo se porque el programa me va bien pero el archivo me sale una cruz
     public class Choose_Weapon_Window extends JFrame implements ActionListener {
         private BufferedImage icon;
         private JPanel p_principal, p_elf, p_hum, p_enan;
@@ -35,19 +35,39 @@ import javax.swing.JPanel;
         private ArrayList<Weapons> available_weapons=new ArrayList<Weapons>(); ;
         
         public Choose_Weapon_Window(Create_data_local local) {
+        	//Esto sirve para guardar los cambios mientras el usuario elege personajes o armas
         	this.local=local;
+        	//
+        	
+        	//Cargar el icono del app
             try {
                 icon = ImageIO.read(new File("./src/Images/icon.png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            //
+            
+            /*En weapons es un poco diferente la logica, lo que he hecho
+            * es si eliges elf de character, solo te saldra armas para elf
+            * no se instanciaran las armas que no son compatibles con 
+            * tu raza
+            */
+            
+            //Metodo que coge el dato guardado, te mira que raza eres, y te modifica el arraylist
+            //"available_weapons" con weapons tuyas, asi sabiendo cuantos paneles necesita para
+            //mostrar las armas 
             Panels_needed(local);
+            //
+            
+            //Al ciclo de automocion que es mas facil tambien
             setTitle("Races Fight");
             setSize(700, 800);
             setLocationRelativeTo(null);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setIconImage(icon);
-
+            //
+            
+            // declarar los paneles, ignorate lo de p_elf, p_enan... es unos de los restos copy paste del choose character 
             p_principal = new JPanel();
             
             p_elf = new JPanel();
@@ -59,8 +79,10 @@ import javax.swing.JPanel;
             p_elf.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
             p_enan.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
             p_hum.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-			
+			//
             
+            //Este for segun arraylist "available_weapons" crea paneles necesarios, y conseguir imagenes, botones, 
+            //y meterlos en esos paneles necesarios
             for (int i = 0; i < available_weapons.size(); i++) {
                 panels[i] = new JPanel();
                 panels[i].setLayout(new BoxLayout(panels[i], BoxLayout.Y_AXIS));
@@ -69,9 +91,12 @@ import javax.swing.JPanel;
                 b_name[i].setAlignmentX(JPanel.CENTER_ALIGNMENT);
                 panels[i].add(images[i]);
                 panels[i].add(b_name[i]);
-                //p_principal.add(panels[i]);
             }
+            //
             
+            // Añadir cada pequeña pieza de panel en cada panel fila
+            //uso un try catch porque siempre habra unos paneles sin declarar que me hace petar,
+            //Con esto ignoro esos errores, y metera armas que si hacen falta
             for (int i = 0; i < 3; i++) {
             	try {
             		p_elf.add(panels[i]);
@@ -82,21 +107,29 @@ import javax.swing.JPanel;
 				}
                 
             }
-			
+			//
             
+            
+            // Ufff ya me estoy cansando de documentar
             p_principal.add(p_elf);
             p_principal.add(p_enan);
             p_principal.add(p_hum);
 			
             add(p_principal);
+            //
             
+            //Una manera lista de capturar los clicks de botones
             for (int i = 0; i < available_weapons.size(); i++) {
                 b_name[i].addActionListener(this);
             }
+            //
             
+            //Trabajar en el insti como señora de limpieza tambien se cobra 1200 al mes, eso me lo han dicho un profe del año pasado
             setVisible(true);
+            //
         }
         
+        //Metodo que segun tu raza te mete los weapons tuyos en un arraylist declarado en la clase
         public void Panels_needed(Create_data_local local) {
         	
         	for (Weapons w : dato.getWeaponsList()) {
@@ -106,7 +139,10 @@ import javax.swing.JPanel;
         	}
         	
         }
+        //
         
+        //Metodo que compara el nombre del weapon de la clase con el de archivo en la carpeta "Images"
+        //Asi conseguir la ruta para dibujar imagen 
         private String getImageFilename(Weapons i) {
         	 File folder = new File("./src/Images/");
              
@@ -116,17 +152,23 @@ import javax.swing.JPanel;
         	 for (File file : files) {
         		 //System.out.println(file.getName());
         		 //System.out.println(i.getWeapon());
+        		 
+        		 //Esta es la comparacion//
                  if(file.getName().substring(0, file.getName().lastIndexOf('.')).equals(i.getWeapon())) {
+                 //
                 	 return file.getName();
                  }
              }
-        	 
-             
+        	   
 			return null;
         
         }
-
-
+        //
+        
+    //Lo decia en archivo choose character, esta es la manera lista de guardar los stats del weapon que 
+    //elegistes en "local", lo que hace es conseguir el nombre del boton que pulsastes, comparando con los nombres de weapons 
+    //datos guardados.
+    //Si coinciden te guarda en "local"
 	public void actionPerformed(ActionEvent e) {
 		Datos dato=new Datos();
 	
@@ -145,25 +187,18 @@ import javax.swing.JPanel;
 		
 		dispose();
 		local.setJugador_w(w_data);;
+		//Volver al menu principal con el dato de la partida siempre guardado
 		new Starting_Window(local);
-		System.out.println(local.toString());
+		//
+		//System.out.println(local.toString());
 		
 	}
 
-	public Weapons getW_data() {
-		return w_data;
-	}
-
-	public void setW_data(Weapons w_data) {
-		this.w_data = w_data;
-	}
-
 	
-    
 	
 }
 
-
+//Hay la misma clase en choose character
 class Image_character extends JPanel{
 	private BufferedImage image1;
 	public Image_character(String path) {
@@ -183,3 +218,4 @@ class Image_character extends JPanel{
 		g2d.dispose();
 	}
 }
+//

@@ -3,10 +3,42 @@ package mainPackage;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+//Solo para dar el nombre al archivo
 public class Class {
 
 }
 
+//Declarar clase de los nombres de personaje que invento
+class Characters_name{
+	private String name;
+	private String race;
+	public Characters_name(String name, String race) {
+		super();
+		this.name = name;
+		this.race = race;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getRace() {
+		return race;
+	}
+	public void setRace(String race) {
+		this.race = race;
+	}
+	@Override
+	public String toString() {
+		return "Characters_name [name=" + name + ", race=" + race + "]";
+	}
+	
+	
+	
+}
+
+//Declarar clase de los atributos que puede tener cada raza
 class Characters {
 	private String race;
 	private int health;
@@ -14,9 +46,6 @@ class Characters {
 	private int defence;
 	private int agility;
 	private int speed;
-	
-	
-	
 	
 	@Override
 	public String toString() {
@@ -71,10 +100,13 @@ class Characters {
 	
 }
 
+//Declarar clase de las armas 
 class Weapons{
 	private String weapon;
+	
 	//[0]=velocitat, [1]=Força
 	private ArrayList<Integer> description;
+	
 	//[0]=Huma, [1]=Elf, [2]=Nan
 	private ArrayList<String> race_use;
 	
@@ -114,19 +146,45 @@ class Weapons{
 	
 }
 
-
+//Mas a delante esto tiene que estar en bbdd
 class Datos{
 	public Datos() {
 		super();
 	}
-	//Mas a delante esto tiene que estar en bbdd
-	ArrayList<Characters> charactersList = new ArrayList<>(Arrays.asList(
+	
+	
+	
+	/*El array tiene formato: 
+	 nameList={  Characters_name(String name, String race) }
+	 
+	 */
+	private ArrayList<Characters_name> nameList= new ArrayList<>(Arrays.asList(
+		    new Characters_name("Maedhros","Elf"),
+		    new Characters_name("Miriel","Elf"),
+		    new Characters_name("Fëanor","Elf"),
+		    new Characters_name("Arthur","Humà"),
+		    new Characters_name("Drogo","Humà"),
+		    new Characters_name("Benedict","Humà"),
+		    new Characters_name("Gregory","Nan"),
+		    new Characters_name("Haywood","Nan"),
+		    new Characters_name("Jeremiah","Nan")
+		));
+	
+	/*El array tiene formato: 
+	 charactersList={  Characters(String race, int health, int strength, int defence, int agility, int speed) }	 
+	 */
+	private ArrayList<Characters> charactersList = new ArrayList<>(Arrays.asList(
 		    new Characters("Nan", 60, 6, 4, 5, 3),
 		    new Characters("Humà", 50, 5, 3, 6, 5),
 		    new Characters("Elf", 40, 4, 2, 7, 7)
 		));
+	
 
-	ArrayList<Weapons> weaponsList = new ArrayList<>(Arrays.asList(
+
+	/*El array tiene formato: 
+	 weaponsList={  Weapons(String weapon, ArrayList<Integer> description, ArrayList<String> race_use) }	 
+	 */
+	private ArrayList<Weapons> weaponsList = new ArrayList<>(Arrays.asList(
 		    new Weapons("Daga", new ArrayList<Integer>(Arrays.asList(3,0)), new ArrayList<String>(Arrays.asList("Humà","Elf",null))),
 		    new Weapons("Espasa", new ArrayList<Integer>(Arrays.asList(1,1)), new ArrayList<String>(Arrays.asList("Humà","Elf","Nan"))),
 		    new Weapons("Destral", new ArrayList<Integer>(Arrays.asList(0,3)), new ArrayList<String>(Arrays.asList("Humà",null,"Nan"))),
@@ -137,6 +195,11 @@ class Datos{
 		    new Weapons("Punyal", new ArrayList<Integer>(Arrays.asList(4,0)), new ArrayList<String>(Arrays.asList("Humà","Elf","Nan"))),
 		    new Weapons("Destral de dues mans", new ArrayList<Integer>(Arrays.asList(0,5)), new ArrayList<String>(Arrays.asList(null,null,"Nan")))
 		));
+	
+	
+	
+	
+	
 
 	public ArrayList<Characters> getCharactersList() {
 		return charactersList;
@@ -153,7 +216,14 @@ class Datos{
 	public void setWeaponsList(ArrayList<Weapons> weaponsList) {
 		this.weaponsList = weaponsList;
 	}
-	
+
+	public ArrayList<Characters_name> getNameList() {
+		return nameList;
+	}
+
+	public void setNameList(ArrayList<Characters_name> nameList) {
+		this.nameList = nameList;
+	}
 	
 	
 	
