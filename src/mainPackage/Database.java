@@ -2,25 +2,26 @@ package mainPackage;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Database {
 	private String url;
 	private String user;
 	private String psw;
+	private Connection con;
+	private String query;
 	
 	public Database() {
 		super();
 		url = "jdbc:mysql://localhost/BDDbatalla?serverTimezone=UTC";
 		user = "root";
 		psw = "1234";
-	}
-	
-	// planed on using this for connecting to the mysqlDB and to store each race and weapon type attributes
-	public void connectDB() {
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection(url, user, psw);
+			con = DriverManager.getConnection(url, user, psw);
 			
 			System.out.println("connection established!!");
 		} catch (ClassNotFoundException e) {
@@ -29,8 +30,29 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+	public void getWeapon(String weaponName) throws SQLException {
+		int power;
+		System.out.println("adasdadasdad");
+		
+		query = "select weapon_power from weapons where weapon_name = ?";
+		PreparedStatement st = con.prepareStatement(query);
+		st.setString(1, weaponName);
+		ResultSet rs = st.executeQuery();
+		
+		System.out.println(rs.getFetchSize());
+		while(rs.next()) {
+			power = rs.getInt(1);
+			System.out.println(rs.getInt(1));
+		}
+	}
 	public static void main(String[] args) {
 		Database bd = new Database();
-		bd.connectDB();
+		try {
+			bd.getWeapon("Daga");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
