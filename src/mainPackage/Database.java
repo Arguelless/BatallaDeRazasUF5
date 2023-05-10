@@ -33,14 +33,12 @@ public class Database {
 	
 	public void getWeapon(String weaponName) throws SQLException {
 		int power;
-		System.out.println("adasdadasdad");
 		
-		query = "select weapon_power from weapons where weapon_name = ?";
+		query = "select weapon_speed from weapons where weapon_name = ?";
 		PreparedStatement st = con.prepareStatement(query);
 		st.setString(1, weaponName);
 		ResultSet rs = st.executeQuery();
 		
-		System.out.println(rs.getFetchSize());
 		while(rs.next()) {
 			power = rs.getInt(1);
 			System.out.println(rs.getInt(1));

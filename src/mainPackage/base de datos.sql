@@ -5,7 +5,9 @@ use BDDbatalla;
 create table if not exists weapons(
 	weapon_id			int				PRIMARY KEY AUTO_INCREMENT,
     weapon_name			varchar(100)	NOT NULL,
-    weapon_image_path	varchar(100) 	NOT NULL
+    weapon_image_path	varchar(100) 	NOT NULL,
+    weapon_power		int				NOT NULL,
+    weapon_speed		int				NOT NULL
 );
 
 create table if not exists warriors(

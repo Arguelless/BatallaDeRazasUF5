@@ -2,35 +2,32 @@ use BDDbatalla;
 
 #Inserció  armes
 
-insert into weapons (weapon_name, weapon_image_path) 
-values ("Daga", "./src/Images/Daga.jpg");
+insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
+values ("Daga", "./src/Images/Daga.jpg", 0, 3);
 
-insert into weapons (weapon_name, weapon_image_path) 
-values ("Espasa", "./src/Images/Espasa.jpg");
+insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
+values ("Espasa", "./src/Images/Espasa.jpg", 1, 1);
 
-insert into weapons (weapon_name, weapon_image_path) 
-values ("Destral", "./src/Images/Destral.jpg");
+insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
+values ("Destral", "./src/Images/Destral.jpg", 0, 3);
 
-insert into weapons (weapon_name, weapon_image_path) 
-values ("Espases dobles", "./src/Images/Espases dobles.jpg");
+insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
+values ("Espases dobles", "./src/Images/Espases dobles.jpg", 2, 2);
 
-insert into weapons (weapon_name, weapon_image_path) 
-values ("Simitarra", "./src/Images/Simitarra.jpg");
+insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
+values ("Simitarra", "./src/Images/Simitarra.jpg", 2, 1);
 
-insert into weapons (weapon_name, weapon_image_path) 
-values ("Arc", "./src/Images/Arc.jpg");
+insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
+values ("Arc", "./src/Images/Arc.jpg", 1, 5);
 
-insert into weapons (weapon_name, weapon_image_path) 
-values ("Katana", "./src/Images/Katana.jpg");
+insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
+values ("Katana", "./src/Images/Katana.jpg", 2, 3);
 
-insert into weapons (weapon_name, weapon_image_path) 
-values ("Punyal", "./src/Images/Punyal.jpg");
+insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
+values ("Punyal", "./src/Images/Punyal.jpg", 0, 4);
 
-insert into weapons (weapon_name, weapon_image_path) 
-values ("Destral de dues mans", "./src/Images/Destral de dues mans.jpg");
-
-insert into weapons (weapon_name, weapon_image_path) 
-values ("Daga", "./src/Images/Daga.jpg");
+insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
+values ("Destral de dues mans", "./src/Images/Destral de dues mans.jpg", 5, 0);
 
 #Inserció  guerrers
 
