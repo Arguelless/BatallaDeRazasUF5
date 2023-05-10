@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Database {
 	private String url;
@@ -79,6 +80,52 @@ public class Database {
 		}
 		
 		return new int[] {health, power, defense, agility, speed};
+	}
+	
+	// This method returns an array that contains all the id's of the weapons
+	// available for the designated race
+	
+	public int[] getAvailableWeapons(int warriorId) throws SQLException{
+		ArrayList<Integer> weapons = new ArrayList<Integer>();
+		
+		query = "select weapon_id from weapons_available where warrior_id = ?";
+		
+		PreparedStatement st = con.prepareStatement(query);
+		st.setInt(1, warriorId);
+		ResultSet rs = st.executeQuery();
+		
+		while(rs.next()) {
+			weapons.add(rs.getInt(1));
+		}
+		
+		// I dont want to be dealing with an ArrayList so i convert it to a regular Array
+		
+		int[] weaponsArray = new int[weapons.size()];
+		
+		for(int i=0;i<weapons.size();i++) {
+			weaponsArray[i] = weapons.get(i);
+		}
+		
+		return weaponsArray;
+	}
+	
+	// method that gets both the name and race of the choosen warrior
+	
+	public String[] getWarrior(int warriorId) throws SQLException {
+		String warrior[] = new String[2];
+		
+		query = "select warrior_name, warrior_race from warriors where warrior_id = ?";
+		
+		PreparedStatement st = con.prepareStatement(query);
+		st.setInt(1, warriorId);
+		ResultSet rs = st.executeQuery();
+		
+		while(rs.next()) {
+			warrior[0] = (rs.getString(1));
+			warrior[0] = (rs.getString(2));
+		}
+		
+		return warrior;
 	}
 	
 	public static void main(String[] args) {
