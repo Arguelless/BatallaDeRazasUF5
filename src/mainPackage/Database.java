@@ -114,7 +114,7 @@ public class Database {
 	public String[] getWarrior(int warriorId) throws SQLException {
 		String warrior[] = new String[2];
 		
-		query = "select warrior_name, warrior_race from warriors where warrior_id = ?";
+		query = "select warrior_name, race_name from warriors join races on race_id = warrior_race where warrior_id = ?";
 		
 		PreparedStatement st = con.prepareStatement(query);
 		st.setInt(1, warriorId);
@@ -122,7 +122,7 @@ public class Database {
 		
 		while(rs.next()) {
 			warrior[0] = (rs.getString(1));
-			warrior[0] = (rs.getString(2));
+			warrior[1] = (rs.getString(2));
 		}
 		
 		return warrior;
@@ -130,8 +130,10 @@ public class Database {
 	
 	public static void main(String[] args) {
 		Database bd = new Database();
+		String datos[];
 		try {
-			bd.getWeaponStats("Daga");
+			datos = bd.getWarrior(7);
+			System.out.println(datos[0] + "  " + datos[1]);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

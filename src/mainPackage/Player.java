@@ -3,11 +3,7 @@ package mainPackage;
 import java.sql.SQLException;
 
 public class Player {
-	private int health;
-	private int power;
-	private int speed;
-	private int defense;
-	private int agility;
+	private int warrior_id, health, power, speed, defense, agility;
 	private String name;
 	private String race;
 	private Weapon weapon;
@@ -15,23 +11,22 @@ public class Player {
 	
 	// custom constructor used to assign the player's attributes and set its weapon of choice
 	
-	public Player(String name, String race) {
+	public Player(int warrior_id) {
 		super();
 		
-		this.name = name;
-		this.race = race;
 		data = new Database();
+		this.warrior_id = warrior_id;
 		
+		setPlayerWarrior();
 		setRacialStats();
 	}
 	
-	// method used to assign a weapon the player, for now it generates a random one
+	// method used to assign a weapon the player
 	
 	public void setWeapon(String name) {
 		weapon = new Weapon(name, this);
 		power += weapon.getPower();
 		speed += weapon.getSpeed();
-		defense += weapon.getSpeed();
 	}
 	
 	// i made this method in case we need to remove the actual weapon of the player for some reason
@@ -39,9 +34,10 @@ public class Player {
 	public void removeWeapon() {
 		power -= weapon.getPower();
 		speed -= weapon.getSpeed();
-		defense = weapon.getSpeed();
 		weapon = null;
 	}
+	
+	// method use to get the racial stats of the warrior from the database
 	
 	public void setRacialStats() {
 		int[] stats = new int[5];
@@ -59,6 +55,21 @@ public class Player {
 		defense = stats[2];
 		agility = stats[3];
 		speed = stats[4];
+	}
+	
+	public void setPlayerWarrior() {
+		String[] warrior = new String[2];
+		
+		try {
+			warrior = data.getWarrior(warrior_id);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		
+		name = warrior[0];
+		race = warrior[1];
 	}
 	
 	// getters and setters
@@ -93,5 +104,12 @@ public class Player {
 	
 	public Database getData() {
 		return data;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [warrior_id=" + warrior_id + ", health=" + health + ", power=" + power + ", speed=" + speed
+				+ ", defense=" + defense + ", agility=" + agility + ", name=" + name + ", race=" + race + ", weapon="
+				+ weapon + ", data=" + data + "]";
 	}
 }

@@ -6,13 +6,17 @@ public class Fight {
 	private Player defender;
 	
 	public void setEnemy() {
-		player2 = new Player("Player2", "Dwarf");
-		player2.setWeapon("Two handed axe");
+		player2 = new Player(4);
+		player2.setWeapon("Sword");
+		
+		System.out.println(player2.toString());
 	}
 	
 	public void setPlayer() {
-		player1 = new Player("Player1", "Elf");
+		player1 = new Player(5);
 		player1.setWeapon("Bow");
+		
+		System.out.println(player1.toString());
 	}
 	
 	// this method is used to establish the initial attacker

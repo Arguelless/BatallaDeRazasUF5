@@ -32,7 +32,7 @@ public class Weapon {
 	// Method used to get the power and speed values of the weapon
 	
 	public void setStats() {
-		int stats[] = new int[2];
+		stats = new int[2];
 		
 		try {
 			stats = player.getData().getWeaponStats(name);
@@ -42,8 +42,8 @@ public class Weapon {
 			
 		}
 		
-		this.power = stats[0];
-		this.speed = stats[1];
+		this.power = stats[1];
+		this.speed = stats[0];
 		
 	}
 }
