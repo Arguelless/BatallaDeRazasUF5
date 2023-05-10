@@ -3,60 +3,71 @@ use BDDbatalla;
 #Inserció  armes
 
 insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
-values ("Daga", "./src/Images/Daga.jpg", 0, 3);
+values ("Dagger", "./src/Images/Dagger.jpg", 0, 3);
 
 insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
-values ("Espasa", "./src/Images/Espasa.jpg", 1, 1);
+values ("Sword", "./src/Images/Sword.jpg", 1, 1);
 
 insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
-values ("Destral", "./src/Images/Destral.jpg", 0, 3);
+values ("Axe", "./src/Images/Axe.jpg", 0, 3);
 
 insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
-values ("Espases dobles", "./src/Images/Espases dobles.jpg", 2, 2);
+values ("Double Swords", "./src/Images/Double Swords.jpg", 2, 2);
 
 insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
-values ("Simitarra", "./src/Images/Simitarra.jpg", 2, 1);
+values ("Cimitarr", "./src/Images/Cimitarr.jpg", 2, 1);
 
 insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
-values ("Arc", "./src/Images/Arc.jpg", 1, 5);
+values ("Bow", "./src/Images/Bow.jpg", 1, 5);
 
 insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
 values ("Katana", "./src/Images/Katana.jpg", 2, 3);
 
 insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
-values ("Punyal", "./src/Images/Punyal.jpg", 0, 4);
+values ("Dirk", "./src/Images/Dirk.jpg", 0, 4);
 
 insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
-values ("Destral de dues mans", "./src/Images/Destral de dues mans.jpg", 5, 0);
+values ("Two handed axe", "./src/Images/Two handed axe.jpg", 5, 0);
+
+#Race insertion
+
+insert into races (race_name, health, power, defense, agility, speed)
+values ("Elf", 40, 4, 2, 7, 7);
+
+insert into races (race_name, health, power, defense, agility, speed)
+values ("Human", 50, 5, 3, 6, 5);
+
+insert into races (race_name, health, power, defense, agility, speed)
+values ("Dwarf", 60, 6, 4, 5, 3);
 
 #Inserció  guerrers
 
-insert into warriors (warrior_name, warrior_image_path) 
-values ("Maedhros", "./src/Images/Elfo1.jpg");
+insert into warriors (warrior_name, warrior_image_path, warrior_race) 
+values ("Maedhros", "./src/Images/Elf1.jpg", 1);
 
-insert into warriors (warrior_name, warrior_image_path) 
-values ("Miriel", "./src/Images/Elfo2.jpg");
+insert into warriors (warrior_name, warrior_image_path, warrior_race) 
+values ("Miriel", "./src/Images/Elf2.jpg", 1);
 
-insert into warriors (warrior_name, warrior_image_path) 
-values ("Fëanor", "./src/Images/Elfo3.jpg");
+insert into warriors (warrior_name, warrior_image_path, warrior_race) 
+values ("Fëanor", "./src/Images/Elf3.jpg", 1);
 
-insert into warriors (warrior_name, warrior_image_path) 
-values ("Arthur", "./src/Images/Humano1.jpg");
+insert into warriors (warrior_name, warrior_image_path, warrior_race) 
+values ("Arthur", "./src/Images/Human1.jpg", 2);
 
-insert into warriors (warrior_name, warrior_image_path) 
-values ("Drogo", "./src/Images/Humano2.jpg");
+insert into warriors (warrior_name, warrior_image_path, warrior_race) 
+values ("Drogo", "./src/Images/Human2.jpg", 2);
 
-insert into warriors (warrior_name, warrior_image_path) 
-values ("Benedict", "./src/Images/Humano3.jpg");
+insert into warriors (warrior_name, warrior_image_path, warrior_race) 
+values ("Benedict", "./src/Images/Human3.jpg", 2);
 
-insert into warriors (warrior_name, warrior_image_path) 
-values ("Gregory", "./src/Images/Enano1.jpg");
+insert into warriors (warrior_name, warrior_image_path, warrior_race) 
+values ("Gregory", "./src/Images/Dwarf1.jpg", 3);
 
-insert into warriors (warrior_name, warrior_image_path) 
-values ("Haywood", "./src/Images/Enano2.jpg");
+insert into warriors (warrior_name, warrior_image_path, warrior_race) 
+values ("Haywood", "./src/Images/Dwarf2.jpg", 3);
 
-insert into warriors (warrior_name, warrior_image_path) 
-values ("Jeremiah", "./src/Images/Enano3.jpg");
+insert into warriors (warrior_name, warrior_image_path, warrior_race) 
+values ("Jeremiah", "./src/Images/Dwarf3.jpg", 3);
 
 #Insert weapons by race
 

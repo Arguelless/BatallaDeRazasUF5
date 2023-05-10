@@ -10,10 +10,22 @@ create table if not exists weapons(
     weapon_speed		int				NOT NULL
 );
 
+create table if not exists races(
+	race_id				int				PRIMARY KEY AUTO_INCREMENT,
+    race_name			VARCHAR(100)	NOT NULL,
+    health				int 			NOT NULL,
+    power				int 			NOT NULL,
+    defense				int 			NOT NULL,
+    agility				int 			NOT NULL,
+    speed				int 			NOT NULL
+);
+
 create table if not exists warriors(
 	warrior_id			int				PRIMARY KEY AUTO_INCREMENT,
     warrior_name		varchar(100)	NOT NULL,
-    warrior_image_path	varchar(100) 	NOT NULL
+    warrior_image_path	varchar(100) 	NOT NULL,
+    warrior_race		int				NOT NULL,
+    FOREIGN KEY (warrior_race)	REFERENCES	races		(race_id)
 );
 
 create table if not exists players(

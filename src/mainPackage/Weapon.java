@@ -1,17 +1,22 @@
 package mainPackage;
 
+import java.sql.SQLException;
+
 public class Weapon {
+	private String name;
+	private int stats[];
 	private int power;
 	private int speed;
-	private int defense;
+	private Player player;
 	
 	// custom constructor used to assign the weapon's stats
 	
-	public Weapon(int power, int speed, int defense) {
+	public Weapon(String name, Player player) {
 		super();
-		this.power = power;
-		this.speed = speed;
-		this.defense = defense;
+		
+		this.name = name;
+		this.player = player;
+		setStats();
 	}
 	
 	// getters and setters
@@ -24,7 +29,21 @@ public class Weapon {
 		return speed;
 	}
 	
-	public int getDefense() {
-		return defense;
+	// Method used to get the power and speed values of the weapon
+	
+	public void setStats() {
+		int stats[] = new int[2];
+		
+		try {
+			stats = player.getData().getWeaponStats(name);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		
+		this.power = stats[0];
+		this.speed = stats[1];
+		
 	}
 }

@@ -1,5 +1,7 @@
 package mainPackage;
 
+import java.sql.SQLException;
+
 public class Player {
 	private int health;
 	private int power;
@@ -7,24 +9,26 @@ public class Player {
 	private int defense;
 	private int agility;
 	private String name;
+	private String race;
 	private Weapon weapon;
+	private Database data;
 	
 	// custom constructor used to assign the player's attributes and set its weapon of choice
 	
-	public Player(int health, int power, int speed, int agility, int defense, String name) {
-		this.health = health;
-		this.power = power;
-		this.speed = speed;
-		this.agility = agility;
-		this.defense = defense;
+	public Player(String name, String race) {
+		super();
+		
 		this.name = name;
-		setWeapon();
+		this.race = race;
+		data = new Database();
+		
+		setRacialStats();
 	}
 	
 	// method used to assign a weapon the player, for now it generates a random one
 	
-	public void setWeapon() {
-		weapon = new Weapon((int) (Math.random()*10), (int) (Math.random()*10), (int) (Math.random()*10));
+	public void setWeapon(String name) {
+		weapon = new Weapon(name, this);
 		power += weapon.getPower();
 		speed += weapon.getSpeed();
 		defense += weapon.getSpeed();
@@ -37,6 +41,24 @@ public class Player {
 		speed -= weapon.getSpeed();
 		defense = weapon.getSpeed();
 		weapon = null;
+	}
+	
+	public void setRacialStats() {
+		int[] stats = new int[5];
+		
+		try {
+			stats = data.getRaceStats(race);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		
+		health = stats[0];
+		power = stats[1];
+		defense = stats[2];
+		agility = stats[3];
+		speed = stats[4];
 	}
 	
 	// getters and setters
@@ -67,5 +89,9 @@ public class Player {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public Database getData() {
+		return data;
 	}
 }

@@ -6,21 +6,13 @@ public class Fight {
 	private Player defender;
 	
 	public void setEnemy() {
-		player2 = new Player(10, (int) (Math.random()*10), 
-								 (int) (Math.random()*10), 
-								 (int) (Math.random()*10),
-								 (int) (Math.random()*10),
-								 "Player2");
-		player2.setWeapon();
+		player2 = new Player("Player2", "Dwarf");
+		player2.setWeapon("Two handed axe");
 	}
 	
 	public void setPlayer() {
-		player1 = new Player(40, (int) (Math.random()*10), 
-								 (int) (Math.random()*10), 
-								 (int) (Math.random()*10),
-								 (int) (Math.random()*10),
-								 "Player1");
-		player1.setWeapon();
+		player1 = new Player("Player1", "Elf");
+		player1.setWeapon("Bow");
 	}
 	
 	// this method is used to establish the initial attacker
