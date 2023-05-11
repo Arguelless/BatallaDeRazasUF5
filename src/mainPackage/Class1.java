@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 //Solo para dar el nombre al archivo
-public class Class {
+public class Class1 {
 
 }
 

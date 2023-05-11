@@ -1,54 +1,42 @@
 package mainPackage;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
+
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
+public class proba extends JFrame {
 
+    private JTextArea textArea;
+    private JScrollPane scrollPane;
 
+    public proba() {
+        super("Componente de texto con scrollbar");
 
-//Ignorad este archivo
-public class proba extends JPanel {
-    private float value = 0;
-    private Color color;
-    public proba(float vida_total,float vida_actual) {
-        setPreferredSize(new Dimension(200, 20));
-        value=(100/vida_total)*vida_actual;
+        // Crear un JTextArea
+        textArea = new JTextArea();
 
-    	
-        if (value <= 30) {
-        	color = Color.RED;
-        } else if (value > 30 && value < 70) {
-        	color = Color.YELLOW;
-        } else {
-        	color = Color.GREEN;
-        }
-        repaint();
-    }
+        // Añadir el JTextArea a un JScrollPane
+        scrollPane = new JScrollPane(textArea);
+        
+        // Añadir el JScrollPane a un JPanel
+        JPanel mainPanel = new JPanel();
+        mainPanel.add(scrollPane,BorderLayout.CENTER);
 
+        // Añadir el JPanel al JFrame
+        getContentPane().add(mainPanel);
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        float width = getWidth();
-
-        float barWidth = (width/100)*value;
-
-        g.setColor(color);
-        g.fillRect(0, 0,  (int) Math.round(barWidth), 100);
-
-
+        // Configurar el JFrame
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Progress Bar");
-        proba progressBar = new proba(100,100);
-        frame.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        frame.add(progressBar);
-        frame.setSize(1000, 600);
-        frame.setVisible(true);
-        
-
+        new proba();
     }
+
 }
