@@ -10,8 +10,8 @@ public class Main {
 		//Inicio de partida, "local" para guardar todo los datos cambiables
 		Create_data_local local= new Create_data_local();
 		//
-		//new Starting_Window(local);
-		new Play_window(local);
+		new Starting_Window(local);
+		//new Play_window(local);
 
 	}
 

@@ -10,7 +10,9 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -27,7 +29,7 @@ public class Choose_Character_Window extends JFrame implements ActionListener{
     private Characters c_data;
     private Create_data_local local;
     private Datos datos = new Datos();
-  
+    private Database d = new Database();
     
     public Choose_Character_Window(Create_data_local local) {
     	//Esto sirve para guardar los cambios mientras el usuario elege personajes o armas
@@ -80,22 +82,35 @@ public class Choose_Character_Window extends JFrame implements ActionListener{
         //Se trata de instanciar la clase que esta abajo del archivo que se llama Image_character,
         //Dandole una ruta para que pueda pintar el imagen en estos arrays de clase Image_character,
         //Y cada p_image[n] es un imagen que le metere en un panel luego.
-        p_image[0] = new Image_character("./src/Images/Elfo1.jpg");
-        p_image[1] = new Image_character("./src/Images/Elfo2.jpg");
-        p_image[2] = new Image_character("./src/Images/Elfo3.jpg");
-        p_image[3] = new Image_character("./src/Images/Humano1.jpg");
-        p_image[4] = new Image_character("./src/Images/Humano2.jpg");
-        p_image[5] = new Image_character("./src/Images/Humano3.jpg");
-        p_image[6] = new Image_character("./src/Images/Enano1.jpg");
-        p_image[7] = new Image_character("./src/Images/Enano2.jpg");
-        p_image[8] = new Image_character("./src/Images/Enano3.jpg");
+        
+        for (int i = 0; i < p_image.length; i++) {
+        	
+        	try {
+				p_image[i]=new Image_character(d.getWarrior(i)[3]);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	/*
+            p_image[0] = new Image_character("./src/Images/Elfo1.jpg");
+            p_image[1] = new Image_character("./src/Images/Elfo2.jpg");
+            p_image[2] = new Image_character("./src/Images/Elfo3.jpg");
+            p_image[3] = new Image_character("./src/Images/Humano1.jpg");
+            p_image[4] = new Image_character("./src/Images/Humano2.jpg");
+            p_image[5] = new Image_character("./src/Images/Humano3.jpg");
+            p_image[6] = new Image_character("./src/Images/Enano1.jpg");
+            p_image[7] = new Image_character("./src/Images/Enano2.jpg");
+            p_image[8] = new Image_character("./src/Images/Enano3.jpg");
+            */
+        }
+        
         //
         
         //Lo mismo, hay que cambiarlo, esto es poner los nombres de botones al nombre del character que toca.
         //Hay que cambiarlo en forma que utilice los nombres guardados en la clase Datos.
         b_name[0].setText("Maedhros");
         b_name[1].setText("Miriel");
-        b_name[2].setText("Fëanor");
+        b_name[2].setText("Feanor");
         b_name[3].setText("Arthur");
         b_name[4].setText("Drogo");
         b_name[5].setText("Benedict");

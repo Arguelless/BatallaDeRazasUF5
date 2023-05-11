@@ -1,6 +1,7 @@
 package mainPackage;
 
 import java.awt.BorderLayout;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -36,7 +37,20 @@ public class proba extends JFrame {
     }
 
     public static void main(String[] args) {
-        new proba();
+    	Database d = new Database();
+    	try {
+			for (String[] i:d.getAllWarrior()) {
+				for (String i2:i) {
+					System.out.println(i2);
+				}
+				
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	    	
     }
 
 }

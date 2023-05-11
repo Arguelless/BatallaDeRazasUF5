@@ -146,6 +146,96 @@ class Weapons{
 	
 }
 
+
+class Datos{
+	public Datos() {
+		super();
+	}
+	
+	
+	
+	/*El array tiene formato: 
+	 nameList={  Characters_name(String name, String race) }
+	 
+	 */
+	private ArrayList<Characters_name> nameList= new ArrayList<>(Arrays.asList(
+		    new Characters_name("Maedhros","Elf"),
+		    new Characters_name("Miriel","Elf"),
+		    new Characters_name("Fëanor","Elf"),
+		    new Characters_name("Arthur","Humà"),
+		    new Characters_name("Drogo","Humà"),
+		    new Characters_name("Benedict","Humà"),
+		    new Characters_name("Gregory","Nan"),
+		    new Characters_name("Haywood","Nan"),
+		    new Characters_name("Jeremiah","Nan")
+		));
+	
+	/*El array tiene formato: 
+	 charactersList={  Characters(String race, int health, int strength, int defence, int agility, int speed) }	 
+	 */
+	private ArrayList<Characters> charactersList = new ArrayList<>(Arrays.asList(
+		    new Characters("Nan", 60, 6, 4, 5, 3),
+		    new Characters("Humà", 50, 5, 3, 6, 5),
+		    new Characters("Elf", 40, 4, 2, 7, 7)
+		));
+	
+
+
+	/*El array tiene formato: 
+	 weaponsList={  Weapons(String weapon, ArrayList<Integer> description, ArrayList<String> race_use) }	 
+	 */
+	private ArrayList<Weapons> weaponsList = new ArrayList<>(Arrays.asList(
+		    new Weapons("Daga", new ArrayList<Integer>(Arrays.asList(3,0)), new ArrayList<String>(Arrays.asList("Humà","Elf",null))),
+		    new Weapons("Espasa", new ArrayList<Integer>(Arrays.asList(1,1)), new ArrayList<String>(Arrays.asList("Humà","Elf","Nan"))),
+		    new Weapons("Destral", new ArrayList<Integer>(Arrays.asList(0,3)), new ArrayList<String>(Arrays.asList("Humà",null,"Nan"))),
+		    new Weapons("Espases dobles", new ArrayList<Integer>(Arrays.asList(2,2)), new ArrayList<String>(Arrays.asList("Humà","Elf",null))),
+		    new Weapons("Simitarra", new ArrayList<Integer>(Arrays.asList(2,1)), new ArrayList<String>(Arrays.asList("Humà","Elf",null))),
+		    new Weapons("Arc", new ArrayList<Integer>(Arrays.asList(5,1)), new ArrayList<String>(Arrays.asList(null,"Elf",null))),
+		    new Weapons("Katana", new ArrayList<Integer>(Arrays.asList(3,2)), new ArrayList<String>(Arrays.asList("Humà",null,null))),
+		    new Weapons("Punyal", new ArrayList<Integer>(Arrays.asList(4,0)), new ArrayList<String>(Arrays.asList("Humà","Elf","Nan"))),
+		    new Weapons("Destral de dues mans", new ArrayList<Integer>(Arrays.asList(0,5)), new ArrayList<String>(Arrays.asList(null,null,"Nan")))
+		));
+	
+	
+	
+	
+	
+
+	public ArrayList<Characters> getCharactersList() {
+		return charactersList;
+	}
+
+	public void setCharactersList(ArrayList<Characters> charactersList) {
+		this.charactersList = charactersList;
+	}
+
+	public ArrayList<Weapons> getWeaponsList() {
+		return weaponsList;
+	}
+
+	public void setWeaponsList(ArrayList<Weapons> weaponsList) {
+		this.weaponsList = weaponsList;
+	}
+
+	public ArrayList<Characters_name> getNameList() {
+		return nameList;
+	}
+
+	public void setNameList(ArrayList<Characters_name> nameList) {
+		this.nameList = nameList;
+	}
+	
+	
+	
+	
+	
+}
+
+
+
+
+
+
 //Mas a delante esto tiene que estar en bbdd
 class Datos{
 	public Datos() {

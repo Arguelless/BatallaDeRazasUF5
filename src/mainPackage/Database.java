@@ -56,6 +56,28 @@ public class Database {
 		return new int[] {speed, power};
 	}
 	
+	public Object[] getWeaponAllStatNoID(int ID) throws SQLException {
+		int power = 0;
+		int speed = 0;
+		String weapon_name="";
+		String weapon_image_path="";
+		query = "select * from weapons where weapon_id = ?";
+		
+		PreparedStatement st = con.prepareStatement(query);
+		st.setInt(1, ID);
+		ResultSet rs = st.executeQuery();
+		
+		while(rs.next()) {
+			power = rs.getInt(4);
+			speed = rs.getInt(5);
+			weapon_name=rs.getString(2);
+			weapon_image_path=rs.getString(3);
+			
+		}
+		
+		return new Object[] {weapon_name, weapon_image_path,power,speed};
+	}
+	
 	// same as previous method but in this case it returns the racial stats of a certain race
 	
 	public int[] getRaceStats(String raceName) throws SQLException {
@@ -112,9 +134,9 @@ public class Database {
 	// method that gets both the name and race of the choosen warrior
 	
 	public String[] getWarrior(int warriorId) throws SQLException {
-		String warrior[] = new String[2];
+		String warrior[] = new String[3];
 		
-		query = "select warrior_name, race_name from warriors join races on race_id = warrior_race where warrior_id = ?";
+		query = "select  warrior_name, race_name,warrior_image_path from warriors join races on race_id = warrior_race where warrior_id = ?";
 		
 		PreparedStatement st = con.prepareStatement(query);
 		st.setInt(1, warriorId);
@@ -123,10 +145,16 @@ public class Database {
 		while(rs.next()) {
 			warrior[0] = (rs.getString(1));
 			warrior[1] = (rs.getString(2));
+			warrior[2] =(rs.getString(3));
 		}
 		
 		return warrior;
 	}
+	
+	
+	
+	
+	
 	
 	public static void main(String[] args) {
 		Database bd = new Database();

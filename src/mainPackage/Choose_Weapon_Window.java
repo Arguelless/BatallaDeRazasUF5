@@ -86,7 +86,8 @@ import javax.swing.JPanel;
             for (int i = 0; i < available_weapons.size(); i++) {
                 panels[i] = new JPanel();
                 panels[i].setLayout(new BoxLayout(panels[i], BoxLayout.Y_AXIS));
-                images[i] = new Image_character("./src/Images/" + getImageFilename(available_weapons.get(i)));
+                images[i] = new Image_character(getImageFilename1(i));
+                
                 b_name[i] = new JButton(available_weapons.get(i).getWeapon());
                 b_name[i].setAlignmentX(JPanel.CENTER_ALIGNMENT);
                 panels[i].add(images[i]);
@@ -164,6 +165,22 @@ import javax.swing.JPanel;
         
         }
         //
+        private String getImageFilename1(int id) {
+        	Database d =new Database();
+        	String file_path="";
+        	try {
+        		file_path =d.getWeaponAllStatNoID(1)[1]+"";
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+       	 	
+       	   
+			return file_path;
+       
+       }
+        
+        
+        
         
     //Lo decia en archivo choose character, esta es la manera lista de guardar los stats del weapon que 
     //elegistes en "local", lo que hace es conseguir el nombre del boton que pulsastes, comparando con los nombres de weapons 

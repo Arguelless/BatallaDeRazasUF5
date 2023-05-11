@@ -15,7 +15,7 @@ insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed)
 values ("Double Swords", "./src/Images/Double Swords.jpg", 2, 2);
 
 insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
-values ("Cimitarr", "./src/Images/Cimitarr.jpg", 2, 1);
+values ("Scimitarr", "./src/Images/Scimitarr.jpg", 2, 1);
 
 insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
 values ("Bow", "./src/Images/Bow.jpg", 1, 5);
@@ -49,7 +49,7 @@ insert into warriors (warrior_name, warrior_image_path, warrior_race)
 values ("Miriel", "./src/Images/Elf2.jpg", 1);
 
 insert into warriors (warrior_name, warrior_image_path, warrior_race) 
-values ("Fëanor", "./src/Images/Elf3.jpg", 1);
+values ("Feanor", "./src/Images/Elf3.jpg", 1);
 
 insert into warriors (warrior_name, warrior_image_path, warrior_race) 
 values ("Arthur", "./src/Images/Human1.jpg", 2);

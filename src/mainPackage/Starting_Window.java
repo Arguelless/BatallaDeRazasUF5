@@ -30,7 +30,7 @@ public class Starting_Window extends JFrame implements ActionListener{
     	
     	//Cargar el icono del app
     	try {
-			icon = ImageIO.read(new File("./src/Images/icon.png"));
+			icon = ImageIO.read(new File("./src/Images/Game_icon.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
