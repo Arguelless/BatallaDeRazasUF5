@@ -10,9 +10,9 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -29,9 +29,8 @@ import javax.swing.JPanel;
         private Image_character[] images = new Image_character[9];
         private JButton[] b_name = new JButton[9];
         private Weapons w_data;
-        //private String path;
+        private Database d = new Database();
         private Create_data_local local;
-        private Datos dato=new Datos();
         private ArrayList<Weapons> available_weapons=new ArrayList<Weapons>(); ;
         
         public Choose_Weapon_Window(Create_data_local local) {
@@ -41,7 +40,7 @@ import javax.swing.JPanel;
         	
         	//Cargar el icono del app
             try {
-                icon = ImageIO.read(new File("./src/Images/icon.png"));
+                icon = ImageIO.read(new File("./src/Images/Game_icon.png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -56,7 +55,7 @@ import javax.swing.JPanel;
             //Metodo que coge el dato guardado, te mira que raza eres, y te modifica el arraylist
             //"available_weapons" con weapons tuyas, asi sabiendo cuantos paneles necesita para
             //mostrar las armas 
-            Panels_needed(local);
+            Weapon_use(local);
             //
             
             //Al ciclo de automocion que es mas facil tambien
@@ -83,13 +82,22 @@ import javax.swing.JPanel;
             
             //Este for segun arraylist "available_weapons" crea paneles necesarios, y conseguir imagenes, botones, 
             //y meterlos en esos paneles necesarios
+            int ID_weapon=0;
             for (int i = 0; i < available_weapons.size(); i++) {
                 panels[i] = new JPanel();
                 panels[i].setLayout(new BoxLayout(panels[i], BoxLayout.Y_AXIS));
-                images[i] = new Image_character(getImageFilename1(i));
-                
                 b_name[i] = new JButton(available_weapons.get(i).getWeapon());
                 b_name[i].setAlignmentX(JPanel.CENTER_ALIGNMENT);
+                
+                try {
+					ID_weapon=d.getWeaponStats(b_name[i].getText())[2];
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                images[i] = new Image_character(getImageFilename1(ID_weapon));
+                
+                
                 panels[i].add(images[i]);
                 panels[i].add(b_name[i]);
             }
@@ -104,7 +112,7 @@ import javax.swing.JPanel;
                     p_enan.add(panels[i + 3]);
                     p_hum.add(panels[i + 6]);
 				} catch (Exception e) {
-
+					
 				}
                 
             }
@@ -131,45 +139,47 @@ import javax.swing.JPanel;
         }
         
         //Metodo que segun tu raza te mete los weapons tuyos en un arraylist declarado en la clase
-        public void Panels_needed(Create_data_local local) {
-        	
-        	for (Weapons w : dato.getWeaponsList()) {
-        		if (w.getRace_use().contains(local.getJugador().getRace())) {
-        			available_weapons.add(w);
-        		}
+        
+        public void Weapon_use(Create_data_local local) {
+        	int[] weapons_ids = new int[0];
+        	try {
+        		weapons_ids=d.getAvailableWeapons(d.getWarriorID(local.getJugador_c_name().getName()));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	Object[] weapons_data=new Object[0];
+        	for (int i = 0; i < weapons_ids.length; i++) {
+        		//Weapons(String weapon, ArrayList<Integer> description, ArrayList<String> race_use) {
+        		try {
+        			
+        			weapons_data=d.getWeaponAllStatNoID(weapons_ids[i]);
+        			
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		
+        		int speed =  (int) weapons_data[3];
+        		int power = (int) weapons_data[2];
+        		
+        		w_data= new Weapons(weapons_data[0]+"", new ArrayList<Integer>(Arrays.asList(speed,power)));
+        		available_weapons.add(w_data);
         	}
         	
         }
+        
         //
         
         //Metodo que compara el nombre del weapon de la clase con el de archivo en la carpeta "Images"
         //Asi conseguir la ruta para dibujar imagen 
-        private String getImageFilename(Weapons i) {
-        	 File folder = new File("./src/Images/");
-             
-
-             File[] files = folder.listFiles();
-            
-        	 for (File file : files) {
-        		 //System.out.println(file.getName());
-        		 //System.out.println(i.getWeapon());
-        		 
-        		 //Esta es la comparacion//
-                 if(file.getName().substring(0, file.getName().lastIndexOf('.')).equals(i.getWeapon())) {
-                 //
-                	 return file.getName();
-                 }
-             }
-        	   
-			return null;
         
-        }
         //
         private String getImageFilename1(int id) {
         	Database d =new Database();
         	String file_path="";
         	try {
-        		file_path =d.getWeaponAllStatNoID(1)[1]+"";
+        		file_path =d.getWeaponAllStatNoID(id)[1]+"";
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -187,13 +197,10 @@ import javax.swing.JPanel;
     //datos guardados.
     //Si coinciden te guarda en "local"
 	public void actionPerformed(ActionEvent e) {
-		Datos dato=new Datos();
-	
+
 		for (JButton b : b_name) {
 			if (e.getSource() == b) {
-
-				
-		        for (Weapons w :dato.getWeaponsList()) {
+		        for (Weapons w :available_weapons) {
 		        	if (w.getWeapon().equals(b.getText())) {
 		        		w_data=w;
 		        	}
@@ -205,6 +212,7 @@ import javax.swing.JPanel;
 		dispose();
 		local.setJugador_w(w_data);;
 		//Volver al menu principal con el dato de la partida siempre guardado
+		System.out.println(local.toString());
 		new Starting_Window(local);
 		//
 		//System.out.println(local.toString());

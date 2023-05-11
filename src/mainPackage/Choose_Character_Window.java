@@ -28,9 +28,8 @@ public class Choose_Character_Window extends JFrame implements ActionListener{
     private JButton[] b_name;
     private Characters c_data;
     private Create_data_local local;
-    private Datos datos = new Datos();
     private Database d = new Database();
-    
+    private String[] warrior_data;
     public Choose_Character_Window(Create_data_local local) {
     	//Esto sirve para guardar los cambios mientras el usuario elege personajes o armas
     	this.local=local;
@@ -38,7 +37,7 @@ public class Choose_Character_Window extends JFrame implements ActionListener{
     	
     	//Cargar el icono del app
         try {
-            icon = ImageIO.read(new File("./src/Images/icon.png"));
+            icon = ImageIO.read(new File("./src/Images/Game_icon.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,41 +81,36 @@ public class Choose_Character_Window extends JFrame implements ActionListener{
         //Se trata de instanciar la clase que esta abajo del archivo que se llama Image_character,
         //Dandole una ruta para que pueda pintar el imagen en estos arrays de clase Image_character,
         //Y cada p_image[n] es un imagen que le metere en un panel luego.
-        
         for (int i = 0; i < p_image.length; i++) {
         	
         	try {
-				p_image[i]=new Image_character(d.getWarrior(i)[3]);
+        		String path_image =d.getWarrior(i+1)[2];
+				p_image[i]=new Image_character(path_image);
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+
 			}
-        	/*
-            p_image[0] = new Image_character("./src/Images/Elfo1.jpg");
-            p_image[1] = new Image_character("./src/Images/Elfo2.jpg");
-            p_image[2] = new Image_character("./src/Images/Elfo3.jpg");
-            p_image[3] = new Image_character("./src/Images/Humano1.jpg");
-            p_image[4] = new Image_character("./src/Images/Humano2.jpg");
-            p_image[5] = new Image_character("./src/Images/Humano3.jpg");
-            p_image[6] = new Image_character("./src/Images/Enano1.jpg");
-            p_image[7] = new Image_character("./src/Images/Enano2.jpg");
-            p_image[8] = new Image_character("./src/Images/Enano3.jpg");
-            */
+        	
         }
         
         //
         
         //Lo mismo, hay que cambiarlo, esto es poner los nombres de botones al nombre del character que toca.
         //Hay que cambiarlo en forma que utilice los nombres guardados en la clase Datos.
-        b_name[0].setText("Maedhros");
-        b_name[1].setText("Miriel");
-        b_name[2].setText("Feanor");
-        b_name[3].setText("Arthur");
-        b_name[4].setText("Drogo");
-        b_name[5].setText("Benedict");
-        b_name[6].setText("Gregory");
-        b_name[7].setText("Haywood");
-        b_name[8].setText("Jeremiah");
+        for (int i = 0; i < p_image.length; i++) {
+        	
+        	try {
+        		String path_name=d.getWarrior(i+1)[0];
+        		b_name[i].setText(path_name);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+
+			}
+        	
+        }
+     
         //
         
         //Esta complicada la logica interior de estos doble fors, te digo directamente lo que hace
@@ -150,50 +144,43 @@ public class Choose_Character_Window extends JFrame implements ActionListener{
         //
 	}
     
-    
-    //Esto es un metodo, para que sepas estas fuera del constructor ya
-    //Lo que hace es Devolver el stats de elfo, humano, enano segun la raza que elige el usuario
-	public  Characters select_character_stat(String raza) {
-		for (Characters c: datos.getCharactersList()) {
-			if (c.getRace().equals(raza)) {
-				return c;
-			}
-		}
-		 return null;
-	}
-	//
-    
     //Esto es para los acciones que hacen los botones
 	public void actionPerformed(ActionEvent e) {
 		//Estos ifs se pueden mejorar como el formato mas o menos en el Choose weapon.
 		//Lo que hacen es llamar el metodo select_character_stat dandole el String raza
 		//y que return el stat de cada raza diferente.
-		
-		if (e.getSource() == b_name[0]) {
-           c_data=select_character_stat("Elf");
-           
-        } else if (e.getSource() == b_name[1]) {
-        	c_data=select_character_stat("Elf");
-        }else if (e.getSource() == b_name[2]) {
-        	c_data=select_character_stat("Elf");
-        }else if (e.getSource() == b_name[3]) {
-        	c_data=select_character_stat("Humà");
-        }else if (e.getSource() == b_name[4]) {
-        	c_data=select_character_stat("Humà");
-        }else if (e.getSource() == b_name[5]) {
-        	c_data=select_character_stat("Humà");
-        }else if (e.getSource() == b_name[6]) {
-        	c_data=select_character_stat("Nan");
-        }else if (e.getSource() == b_name[7]) {
-        	c_data=select_character_stat("Nan");
-        }else if (e.getSource() == b_name[8]) {
-        	c_data=select_character_stat("Nan");
-        }
+		Database bd = new Database();
+		for (JButton b : b_name) {
+			if (e.getSource() == b) {
+		        for (int i = 0; i < b_name.length; i++) {
+		        	try {
+						warrior_data=bd.getWarrior(i+1);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		        	if (b.getText().equals(warrior_data[0])) {
+		        		int[] Character_data=null;
+						try {
+							Character_data = bd.getRaceStats(warrior_data[1]);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+		        		c_data=new Characters(warrior_data[1], Character_data[0], Character_data[1], Character_data[2], Character_data[3], Character_data[4]);
+		        		local.setJugador(c_data);
+		        		//Characters_name(String name, String race) 
+		        		local.setJugador_c_name(new Characters_name( warrior_data[0],warrior_data[1]));
+		        	}
+		        }
+		        } 
+		}
 		//
 		
 		//Cerrar la ventana, guardar los datos modificados, volver la ventana principal
 		dispose();
-		local.setJugador(c_data);
+		
 		new Starting_Window(local);
 		//System.out.println(local.toString());
 		//

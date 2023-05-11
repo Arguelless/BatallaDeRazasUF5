@@ -41,7 +41,8 @@ public class Database {
 	public int[] getWeaponStats(String weaponName) throws SQLException {
 		int power = 0;
 		int speed = 0;
-		query = "select weapon_speed, weapon_power from weapons where weapon_name = ?";
+		int id =0;
+		query = "select weapon_speed, weapon_power, weapon_id from weapons where weapon_name = ?";
 		
 		PreparedStatement st = con.prepareStatement(query);
 		st.setString(1, weaponName);
@@ -50,10 +51,10 @@ public class Database {
 		while(rs.next()) {
 			power = rs.getInt(2);
 			speed = rs.getInt(1);
-			
+			id=rs.getInt(3);
 		}
 		
-		return new int[] {speed, power};
+		return new int[] {speed, power,id};
 	}
 	
 	public Object[] getWeaponAllStatNoID(int ID) throws SQLException {
@@ -151,6 +152,23 @@ public class Database {
 		return warrior;
 	}
 	
+	public int getWarriorID(String warriorname) throws SQLException {
+		int IDwarrior=0;
+		
+		query = "select  warrior_id from warriors where warrior_name = ?";
+		
+		PreparedStatement st = con.prepareStatement(query);
+		st.setString(1, warriorname);
+		ResultSet rs = st.executeQuery();
+		
+		while(rs.next()) {
+			IDwarrior=rs.getInt(1);
+		}
+		
+		return IDwarrior;
+	}
+	
+	
 	
 	
 	
@@ -161,7 +179,7 @@ public class Database {
 		String datos[];
 		try {
 			datos = bd.getWarrior(7);
-			System.out.println(datos[0] + "  " + datos[1]);
+			System.out.println(bd.getWarrior(1)[2]);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
