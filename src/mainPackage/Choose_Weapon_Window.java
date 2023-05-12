@@ -212,7 +212,6 @@ import javax.swing.JPanel;
 		dispose();
 		local.setJugador_w(w_data);;
 		//Volver al menu principal con el dato de la partida siempre guardado
-		System.out.println(local.toString());
 		new Starting_Window(local);
 		//
 		//System.out.println(local.toString());

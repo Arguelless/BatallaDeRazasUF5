@@ -118,7 +118,10 @@ public void actionPerformed(ActionEvent evento) {
                 if(character_choosed==false) {
                 	throw new Starting_windows_exception("Error: You can't play without any characters selected");
                 } else {
-                	throw new Starting_windows_exception("Falta");
+                	Traslate_class t = new Traslate_class(local);
+                	
+                	System.out.println(t.getUserPlayer().toString());
+
                 	/*
                 	error_messages.setVisible(false);
                 	dispose();

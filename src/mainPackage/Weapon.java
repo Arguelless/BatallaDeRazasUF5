@@ -1,6 +1,7 @@
 package mainPackage;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class Weapon {
 	private String name;
@@ -46,4 +47,6 @@ public class Weapon {
 		this.speed = stats[0];
 		
 	}
+
+	
 }

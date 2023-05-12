@@ -169,6 +169,15 @@ public class Choose_Character_Window extends JFrame implements ActionListener{
 						}
 						
 		        		c_data=new Characters(warrior_data[1], Character_data[0], Character_data[1], Character_data[2], Character_data[3], Character_data[4]);
+		        		
+		        		
+		        		try {
+							local.setIdWarriorHuman(bd.getWarriorID(warrior_data[0]));
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							local.setIdWarriorHuman(0);
+						}
+		        		
 		        		local.setJugador(c_data);
 		        		//Characters_name(String name, String race) 
 		        		local.setJugador_c_name(new Characters_name( warrior_data[0],warrior_data[1]));

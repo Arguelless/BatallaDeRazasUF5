@@ -7,14 +7,40 @@ import java.util.Arrays;
 //clase necesaria, te guardara todo el progreso durante la partida
 //Al final de batallas se guardara en bdd
 public class Create_data_local {
+	
 	private Characters jugador;
 	private Characters bot;
 	private Weapons jugador_w;
 	private Weapons bot_w;
 	private Characters_name jugador_c_name;
 	private Characters_name bot_c_name;
+	private int idWarriorBOT;
+	private int idWarriorHuman;
 	
-	
+	public int getIdWarriorBOT() {
+		return idWarriorBOT;
+	}
+
+
+
+	public void setIdWarriorBOT(int idWarriorBOT) {
+		this.idWarriorBOT = idWarriorBOT;
+	}
+
+
+
+	public int getIdWarriorHuman() {
+		return idWarriorHuman;
+	}
+
+
+
+	public void setIdWarriorHuman(int idWarriorHuman) {
+		this.idWarriorHuman = idWarriorHuman;
+	}
+
+
+
 	public Characters_name getJugador_c_name() {
 		return jugador_c_name;
 	}
