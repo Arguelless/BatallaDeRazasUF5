@@ -21,6 +21,9 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 //Esto lo estoy haciendo y me encontre problemas quizas en martes me ayudais
@@ -313,38 +316,60 @@ class Set_bot_character{
 	private Random rand = new Random();
     private int index_random ;
     private Create_data_local local ;
-    private Datos datos = new Datos();
-    
-    
+    private Database d = new Database();
+    private Characters c=null;
+    private Weapons w=null;
+    private String [] data1=null;
+    private int [] data2=null;
+    private Object[] data3= null;
+    private int power,speed;
     public Set_bot_character(Create_data_local local) {
     	this.local=local;
     	// primero personaje
-    	index_random= rand.nextInt(datos.getCharactersList().size());
-    	local.setBot(datos.getCharactersList().get(index_random));
+    	index_random= rand.nextInt(9);
+    	//Characters(String race, int health, int strength, int defence, int agility, int speed)
+    	try {
+			data1=d.getWarrior(index_random);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	try {
+			data2=d.getRaceStats(data1[1]);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	//{health, power, defense, agility, speed};
+    	//warrior_name, race_name,warrior_image_path
+    	c= new Characters(data1[1], data2[0], data2[1], data2[2], data2[3], data2[4]);
+    	local.setBot(c);
+    	local.setJugador_c_name(new Characters_name(data1[0], data1[1]));
     	
-    	boolean salir=false;
-    	while (salir==false) {
-    		index_random= rand.nextInt(datos.getNameList().size());
-    		if (datos.getNameList().get(index_random).getRace().equals(local.getBot().getRace())){
-    			salir=true;
-    			local.setBot_c_name(datos.getNameList().get(index_random));
-    		}
-    		
-    	}
     	//Ahora arma
-    	salir=false;
-    	while (salir==false) {
-    		index_random= rand.nextInt(datos.getWeaponsList().size());
-    		if (datos.getWeaponsList().get(index_random).getRace_use().contains(local.getBot().getRace())){
-    			salir=true;
-    			local.setBot_w(datos.getWeaponsList().get(index_random));
-    		}
+    	
+    	try {
+    		data2=d.getAvailableWeapons(d.getWarriorID(data1[0]));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	index_random=rand.nextInt(data2.length);
+    	//public Weapons(String weapon, ArrayList<Integer> description)
+    	try {
+    		//ArrayList<Integer>(Arrays.asList(3,0))
+    		//{weapon_name, weapon_image_path,power,speed};
+    		data3=d.getWeaponAllStatNoID(index_random);
+    		power= (int) data3[2];
+    		speed= (int) data3[3];
     		
-    	}
+			w=new Weapons(data3[0]+"", new ArrayList<Integer>(Arrays.asList(power,speed)));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
-
-    
 }
 //
 class Fight {

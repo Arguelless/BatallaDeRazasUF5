@@ -1,11 +1,16 @@
 package mainPackage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Database {
 	private String url;
@@ -19,14 +24,14 @@ public class Database {
 	public Database() {
 		super();
 		
-		url = "jdbc:mysql://localhost/BDDbatalla?serverTimezone=UTC";
+		url = "jdbc:mysql://localhost/bddbatalla?serverTimezone=UTC";
 		user = "root";
 	     psw = "X9883835r";
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(url, user, psw);
-			
+			//createTables();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			
@@ -35,7 +40,55 @@ public class Database {
 			
 		}
 	}
-	
+	public void createTables(){
+
+        // It uses the ProcessBuilder class to execute a mysql order in the system command line.
+
+        ProcessBuilder pb = new ProcessBuilder("mysql", "-u", user, "-p" + psw);
+        File file = new File("./src/mainPackage/base de datos.sql");
+        pb.redirectInput(file);
+
+        try {
+            Process process = pb.start();
+            int exitCode = process.waitFor();
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+
+        }
+
+        // It checks if the database contains any weapon so it can insert the data in case
+        // is needed
+
+        query = "select count(*) from weapons;";
+
+        try {
+            con.createStatement().executeUpdate("use BDDbatalla;");
+
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            rs.next();
+
+            if(rs.getInt(1)==0) {
+                pb = new ProcessBuilder("mysql", "-u", user, "-p" + psw, "BDDbatalla", "-e", "source ./src/mainPackage/scriptArmas.sql");
+
+                try {
+                    Process process = pb.start();
+                    int exitCode = process.waitFor();
+
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+    }
+
 	// Method that returns the stats of the desired weapon
 	
 	public int[] getWeaponStats(String weaponName) throws SQLException {
@@ -80,6 +133,8 @@ public class Database {
 	}
 	
 	// same as previous method but in this case it returns the racial stats of a certain race
+
+	
 	
 	public int[] getRaceStats(String raceName) throws SQLException {
 		int health = 0;
