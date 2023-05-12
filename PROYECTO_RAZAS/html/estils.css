@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    padding: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgray;
+
+
+}
+
+table, td, th {
+    border-collapse: collapse;
+    border: 1px solid;
+    border-color: black;
+}
+
+table {
+    width: 90%;
+}
+
+th {
+    height: 50px;
+    align-items: center;
+    background-color: darkred;
+    color: white;
+    
+}
+
+td, th {
+    padding: 5px;
+}
+tr:nth-child(even) {
+    background-color: rgb(202, 161, 161);
+}
+
+h1
+{
+  background-image: linear-gradient(
+    -225deg,
+    rgb(37, 8, 8) 0%,
+    red 29%,
+    darkred 67%,    
+    rgb(37, 8, 8) 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+      font-size:50px;
+      font-weight:900;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@media only screen and (max-width: 760px), (max-device-width: 1024px) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border-bottom: 2px solid #690461;
+  }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50% !important;
+    text-align: left !important;
+  }
+
+  td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: bold;
+  }
+
+  td:nth-of-type(1):before {
+    content: "Battle ID";
+  }
+  td:nth-of-type(2):before {
+    content: "Player ID";
+  }
+  td:nth-of-type(3):before {
+    content: "Warrior ID";
+  }
+  td:nth-of-type(4):before {
+    content: "Warrior weapon ID";
+  }
+  td:nth-of-type(5):before {
+    content: "Opponent ID";
+  }
+  td:nth-of-type(6):before {
+    content: "Opponent weapon ID";
+  }
+  td:nth-of-type(7):before {
+    content: "Injuries caused";
+  }
+  td:nth-of-type(8):before {
+    content: "Injuries suffered";
+  }
+  td:nth-of-type(9):before {
+    content: "Battle points";
+  }
+}
