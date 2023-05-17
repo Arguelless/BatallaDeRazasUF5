@@ -1,4 +1,4 @@
-package mainPackage;
+package playerClasses;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,7 +24,7 @@ public class Database {
 	public Database() {
 		super();
 		
-		url = "jdbc:mysql://localhost/bddbatalla?serverTimezone=UTC";
+		url = "jdbc:mysql://localhost/BDDbatalla?serverTimezone=UTC";
 		user = "root";
 	     psw = "X9883835r";
 		
@@ -89,6 +89,45 @@ public class Database {
         }
     }
 
+	// Method that returns all data of battle table
+	
+	public int getRankingTotal() throws SQLException {
+		int total=0;
+		
+		query = "select count(*) from battle";
+		
+		PreparedStatement st = con.prepareStatement(query);
+		ResultSet rs = st.executeQuery();
+		
+		while(rs.next()) {	
+			total = rs.getInt(1);
+		}
+		
+		return total;
+	}
+	
+	// Method that returns all data of battle table
+	
+	public int[] getRanking(int BattleID) throws SQLException {
+		int p_id=0;
+		int warrior_id=0;
+		int battle_points=0;
+		
+		query = "select player_id, warrior_id, battle_points from battle where battle_id= ?";
+		
+		PreparedStatement st = con.prepareStatement(query);
+		st.setInt(1, BattleID);
+		ResultSet rs = st.executeQuery();
+		
+		while(rs.next()) {	
+			p_id = rs.getInt(1);
+			warrior_id = rs.getInt(2);
+			battle_points=rs.getInt(3);
+		}
+		
+		return new int[] {p_id, warrior_id,battle_points};
+	}
+	
 	// Method that returns the stats of the desired weapon
 	
 	public int[] getWeaponStats(String weaponName) throws SQLException {
@@ -101,7 +140,7 @@ public class Database {
 		st.setString(1, weaponName);
 		ResultSet rs = st.executeQuery();
 		
-		while(rs.next()) {
+		while(rs.next()) {	
 			power = rs.getInt(2);
 			speed = rs.getInt(1);
 			id=rs.getInt(3);
@@ -110,26 +149,22 @@ public class Database {
 		return new int[] {speed, power,id};
 	}
 	
-	public Object[] getWeaponAllStatNoID(int ID) throws SQLException {
+	public String[] getWeaponAllStatNoID(int ID) throws SQLException {
 		int power = 0;
 		int speed = 0;
 		String weapon_name="";
 		String weapon_image_path="";
-		query = "select * from weapons where weapon_id = ?";
+		query = "select weapon_name, weapon_image_path from weapons where weapon_id = ?";
 		
 		PreparedStatement st = con.prepareStatement(query);
 		st.setInt(1, ID);
 		ResultSet rs = st.executeQuery();
 		
-		while(rs.next()) {
-			power = rs.getInt(4);
-			speed = rs.getInt(5);
-			weapon_name=rs.getString(2);
-			weapon_image_path=rs.getString(3);
+		rs.next();
+		weapon_name=rs.getString(1);
+		weapon_image_path=rs.getString(2);
 			
-		}
-		
-		return new Object[] {weapon_name, weapon_image_path,power,speed};
+		return new String[] {weapon_name, weapon_image_path};
 	}
 	
 	// same as previous method but in this case it returns the racial stats of a certain race
@@ -198,11 +233,11 @@ public class Database {
 		st.setInt(1, warriorId);
 		ResultSet rs = st.executeQuery();
 		
-		while(rs.next()) {
-			warrior[0] = (rs.getString(1));
-			warrior[1] = (rs.getString(2));
-			warrior[2] =(rs.getString(3));
-		}
+		rs.next();
+		
+		warrior[0] = (rs.getString(1));
+		warrior[1] = (rs.getString(2));
+		warrior[2] =(rs.getString(3));
 		
 		return warrior;
 	}
@@ -223,21 +258,107 @@ public class Database {
 		return IDwarrior;
 	}
 	
-	
-	
-	
-	
-	
-	
-	public static void main(String[] args) {
-		Database bd = new Database();
-		String datos[];
+	public int getWarriorCount() {
+		int res = 0;
+		query = "select count(*) from warriors;";
+		
+		ResultSet rs;
+		
 		try {
-			datos = bd.getWarrior(7);
-			System.out.println(bd.getWarrior(1)[2]);
+			Statement st = con.createStatement();
+			rs = st.executeQuery(query);
+			rs.next();
+			res = rs.getInt(1);
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
+		}
+		
+		return res;
+	}
+	
+	public String getWeaponImage(String weapon_name) {
+		String res = "";
+		
+		query = "select weapon_image_path from weapons where weapon_name = ?";
+		
+		try {
+			PreparedStatement st = con.prepareStatement(query);
+			st.setString(1, weapon_name);
+			
+			ResultSet rs = st.executeQuery();
+			
+			rs.next();
+			
+			res = rs.getString(1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		
+		
+		return res;
+	}
+	
+	public int insertPlayer(Player player) {
+		String name = player.getName();
+		int id = 0;
+		
+		query = "insert into players (player_name) values(?)";
+		try {
+			PreparedStatement st = con.prepareStatement(query);
+			st.setString(1, name);
+			
+			st.executeUpdate();
+			
+			query = "select max(player_id) from players;";
+			
+			st = con.prepareStatement(query);
+			ResultSet rs = st.executeQuery();
+			
+			rs.next();
+			id = rs.getInt(1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		
+		return id;
+	}
+	
+	public void insertBattle(Player player, Player enemy) {
+		int player_id = insertPlayer(player);
+		int enemy_id = insertPlayer(enemy);
+		int warrior_id = player.getId();
+		int injuriesCaused = player.getInjuriesCaused();
+		int injuriesSuffered = player.getInjuriesSuffered();
+		int points = player.getPoints();
+		
+		try {
+			int warrior_weapon_id = player.getData().getWeaponStats(player.getWeapon().getName())[2];
+			int enemy_weapon_id = enemy.getData().getWeaponStats(enemy.getWeapon().getName())[2];
+			
+			query = "insert into battle (player_id, warrior_id, warrior_weapon_id, opponent_id, opponent_weapon_id,"
+					+ "injuries_caused, injuries_suffered, battle_points) values (?, ?, ?, ?, ? ,?, ?, ?)";
+			
+			PreparedStatement st = con.prepareStatement(query);
+			st.setInt(1, player_id);
+			st.setInt(2, warrior_id);
+			st.setInt(3, warrior_weapon_id);
+			st.setInt(4, enemy_id);
+			st.setInt(5, enemy_weapon_id);
+			st.setInt(6, injuriesCaused);
+			st.setInt(7, injuriesSuffered);
+			st.setInt(8, points);
+			
+			st.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
 		}
 	}
 }

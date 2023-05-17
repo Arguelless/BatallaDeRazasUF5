@@ -1,4 +1,4 @@
-package mainPackage;
+package playerClasses;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -28,6 +28,10 @@ public class Weapon {
 	
 	public int getSpeed() {
 		return speed;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	// Method used to get the power and speed values of the weapon

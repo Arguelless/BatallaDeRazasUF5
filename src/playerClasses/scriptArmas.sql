@@ -15,7 +15,7 @@ insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed)
 values ("Double Swords", "./src/Images/Double Swords.jpg", 2, 2);
 
 insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
-values ("Scimitarr", "./src/Images/Scimitarr.jpg", 2, 1);
+values ("cimitarr", "./src/Images/Scimitarr.jpg", 2, 1);
 
 insert into weapons (weapon_name, weapon_image_path, weapon_power, weapon_speed) 
 values ("Bow", "./src/Images/Bow.jpg", 1, 5);
