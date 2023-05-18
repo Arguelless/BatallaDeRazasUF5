@@ -32,7 +32,6 @@ public class Choose_Weapon_Window extends JFrame{
 		super();
 		
 		this.player = player;
-		System.out.println(player.toString());
 		
 		frameParameters();
 		setupPanels();

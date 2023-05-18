@@ -26,7 +26,7 @@ public class Database {
 		
 		url = "jdbc:mysql://localhost/BDDbatalla?serverTimezone=UTC";
 		user = "root";
-	     psw = "X9883835r";
+	     psw = "1234";
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

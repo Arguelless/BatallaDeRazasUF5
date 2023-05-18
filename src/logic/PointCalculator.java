@@ -54,7 +54,6 @@ public class PointCalculator implements BattlePoints{
 			points += DOUBLEHANDEDAXE;
 			
 		}
-		System.out.println(points);
 		return points;
 	}
 }

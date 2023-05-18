@@ -49,7 +49,6 @@ public class Starting_Window extends JFrame implements ActionListener{
 		super();
 		
 		this.player = player;
-		System.out.println(player.toString());
 		
 		loadIcon();
 		frameParameters();

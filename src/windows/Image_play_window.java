@@ -23,12 +23,12 @@ public class Image_play_window extends JPanel {
             e.printStackTrace();
         }
 
-        // calcular la escala para ajustar la imagen al tamaño de la ventana
+        // calcualtes the scale of the window to adjust the image
         double scaleX = (double) x / image.getWidth();
         double scaleY = (double) y / image.getHeight();
         double scale = Math.min(scaleX, scaleY);
 
-        // escalar la imagen
+        // scales the image
         scaledWidth = (int) (scale * image.getWidth());
         scaledHeight = (int) (scale * image.getHeight());
         Image scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
